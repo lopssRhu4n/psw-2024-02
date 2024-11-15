@@ -1,7 +1,7 @@
 import React from "react";
 
 const MainLayout = (props) => {
-    return (<>oi</>);
+    return (<div></div>);
 }
 
 export default MainLayout;
