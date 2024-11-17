@@ -1,0 +1,17 @@
+.bar {
+    height: 4.75rem;
+    width: 100vw;
+    bottom: 0;
+}
+
+@media (min-width: 576px) {
+    .bar {
+        height: 100vh;
+        width: 4.75rem;
+        transition: width .3s ease-in-out;
+    }
+
+    .bar:hover {
+        width: 225px;
+    }
+}
