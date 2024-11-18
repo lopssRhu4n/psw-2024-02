@@ -4,6 +4,18 @@
     bottom: 0;
 }
 
+.nav-link-text {
+    visibility: hidden;
+    height: 0;
+    opacity: 0;
+    transition: visibility 0s, width 0, opacity 0.5s linear;
+    width: 0;
+}
+
+.my-brand {
+    display: none;
+}
+
 @media (min-width: 576px) {
     .bar {
         height: 100vh;
@@ -13,5 +25,18 @@
 
     .bar:hover {
         width: 225px;
+    }
+
+    .bar:hover .nav-link-text {
+        display: inline-block;
+        margin-left: 6px;
+        width: 130px;
+        transition: all 1s;
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .my-brand {
+        display: block;
     }
 }
