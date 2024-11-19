@@ -4,11 +4,17 @@
     bottom: 0;
 }
 
+.container-box {
+    height: 100dvh;
+    width: 100dvw;
+}
+
 .nav-link-text {
     visibility: hidden;
     height: 0;
     opacity: 0;
-    transition: visibility 0s, width 0, opacity 0.5s linear;
+    text-align: center;
+    transition: visibility 0s, width 0, opacity 0.3s ease-in-out;
     width: 0;
 }
 
@@ -31,7 +37,7 @@
         display: inline-block;
         margin-left: 6px;
         width: 130px;
-        transition: all 1s;
+        transition: all .3s ease-in-out;
         visibility: visible;
         opacity: 1;
     }
