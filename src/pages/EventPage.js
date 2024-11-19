@@ -1,9 +1,9 @@
 import { Container } from "react-bootstrap";
 
-const MainPage = () => {
+const EventPage = () => {
     return (<Container fluid="sm" className="w-75 h-100">
-        <h1>Página Principal</h1>
+        <h1>Página de Eventos</h1>
     </Container>);
 }
 
-export default MainPage;
+export default EventPage;
