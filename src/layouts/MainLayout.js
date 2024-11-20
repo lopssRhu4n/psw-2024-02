@@ -5,7 +5,7 @@ import { Outlet, NavLink } from "react-router-dom";
 // import { Container } from "react-bootstrap";
 
 const MainLayout = (props) => {
-    return (<div className="vw-100 min-vh-100 position-relative">
+    return (<div className="max-vw-100 min-vh-100 position-relative">
 
         <Navbar className="bar shadow-lg z-1 position-fixed  d-flex flex-row flex-sm-column justify-content-center justify-content-sm-start  align-items-center py-1 px-3 px-sm-1 pt-sm-5  flex-shrink-0 bg-body-tertiary" >
             <Navbar.Brand className="m-0 text-center mb-3 my-brand" style={{ fontSize: "12px" }}>Evente-se</Navbar.Brand>

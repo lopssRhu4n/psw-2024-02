@@ -4,6 +4,8 @@
 
 @media (min-width: 576px) {
   .main-container {
-    padding: 0 4.75rem;
+    padding: 0 2.5rem;
+    max-width: 90%;
   }
+
 }

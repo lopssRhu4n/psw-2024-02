@@ -9,10 +9,10 @@
     --angle: 0deg;
     content: '';
     position: absolute;
-    inset: -1px;
+    inset: -2px;
     border-radius: var(--bs-border-radius);
-    background: conic-gradient(from var(--angle), transparent, var(--bs-border-color-translucent), transparent, var(--bs-border-color-translucent));
     z-index: -1;
+    background-color: transparent;
 }
 
 /* .main-card::before {
@@ -22,11 +22,12 @@
 } */
 
 .main-card:hover {
-    border-width: 0;
+    border-color: transparent;
 }
 
 .main-card:hover::after {
     animation: glowing-border 3.5s linear infinite;
+    background: conic-gradient(from var(--angle), transparent, var(--bs-border-color-translucent), transparent, var(--bs-border-color-translucent));
 }
 
 /* .main-card:hover::before {
