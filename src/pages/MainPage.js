@@ -1,12 +1,19 @@
-import { Card, Row } from "react-bootstrap";
+import { Button, Card, Container, Form, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import { useState } from "react";
 import { defaultEventList } from "../models/Event";
 import '../styles/MainPage.css'
 
 const MainPage = () => {
     const [eventList] = useState(defaultEventList);
+    const [showCreationForm, setShowCreationForm] = useState(false);
+    console.log(showCreationForm)
+    const renderTooltip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+            Criar Evento
+        </Tooltip>
+    );
 
-    return (<div fluid="sm" className="mx-auto main-container pt-5 mb-5  gx-4 gy-5 row justify-content-center" style={{ width: '90%' }} >
+    return (<div fluid="sm" className="mx-auto  main-container pt-5 mb-5  gx-4 gy-5 row justify-content-center" style={{ width: '90%' }} >
         <h1 className="col-12"> Eventos</h1>
         {
             eventList.map((val, index) =>
@@ -42,6 +49,32 @@ const MainPage = () => {
                         </Card.Body>
                     </Card>
                 </div>)
+        }
+
+        {showCreationForm ? (
+            <Form className="border rounded-1 position-fixed w-75 h-75 bg-body py-4 px-2"  >
+                <Row className="d-flex px-2 justify-content-end">
+                    <Button className="  rounded-circle" style={{ width: 'auto' }} onClick={() => setShowCreationForm(false)}>
+                        <i className="bi bi-plus" width="32" height="32"></i>
+                        {showCreationForm}
+                    </Button>
+
+                </Row>
+
+            </Form>
+        ) : (
+            <OverlayTrigger
+                placement="bottom"
+                delay={{ show: 100, hide: 100 }}
+                overlay={renderTooltip}
+            >
+                <Button className="bg-primary position-fixed z-3 rounded-circle" onClick={() => setShowCreationForm(true)} style={{ width: '75px', height: '75px', right: '3%', bottom: '6.5rem' }}>
+                    <i className="bi bi-plus" width="32" height="32"></i>
+                    {showCreationForm}
+                </Button>
+            </OverlayTrigger>
+
+        )
         }
     </div >);
 }
