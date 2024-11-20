@@ -1,9 +1,10 @@
-import { Container } from "react-bootstrap";
+import { useState } from "react";
+import { Card, Container } from "react-bootstrap";
 
 const EventPage = () => {
-    return (<Container fluid="sm" className="w-75 h-100">
-        <h1>Página de Eventos</h1>
-    </Container>);
+    return <Container fluid="sm" className="min-vh-100 vw-75"><h1>Criar Evento</h1></Container>
+
+
 }
 
 export default EventPage;

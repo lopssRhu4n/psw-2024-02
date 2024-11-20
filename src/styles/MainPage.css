@@ -1,0 +1,60 @@
+.main-card {
+    position: relative;
+}
+
+.main-card::after
+
+/* .main-card::before  */
+    {
+    --angle: 0deg;
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: var(--bs-border-radius);
+    background: conic-gradient(from var(--angle), transparent, var(--bs-border-color-translucent), transparent, var(--bs-border-color-translucent));
+    z-index: -1;
+}
+
+/* .main-card::before {
+    z-index: -2;
+    filter: blur(20px);
+    opacity: .7;
+} */
+
+.main-card:hover {
+    border-width: 0;
+}
+
+.main-card:hover::after {
+    animation: glowing-border 3.5s linear infinite;
+}
+
+/* .main-card:hover::before {
+    animation: blur-effect 3.5s linear infinite;
+} */
+
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes glowing-border {
+    from {
+        --angle: 0deg;
+    }
+
+    to {
+        --angle: 360deg;
+    }
+}
+
+/* @keyframes blur-effect {
+    from {
+        filter: blur(20px);
+    }
+
+    to {
+        filter: blur(19px);
+    }
+} */
