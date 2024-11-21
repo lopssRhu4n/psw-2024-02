@@ -1,4 +1,4 @@
-import { Button, Card, Container, Form, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import { Button, Card, Col, Container, Form, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import { useState } from "react";
 import { defaultEventList } from "../models/Event";
 import '../styles/MainPage.css'
@@ -6,7 +6,6 @@ import '../styles/MainPage.css'
 const MainPage = () => {
     const [eventList] = useState(defaultEventList);
     const [showCreationForm, setShowCreationForm] = useState(false);
-    console.log(showCreationForm)
     const renderTooltip = (props) => (
         <Tooltip id="button-tooltip" {...props}>
             Criar Evento
@@ -17,7 +16,7 @@ const MainPage = () => {
         <h1 className="col-12"> Eventos</h1>
         {
             eventList.map((val, index) =>
-                <div className="col-sm-6 col-lg-4" style={{ minWidth: '350px' }} key={'event-card-' + index}>
+                <div className="main-card-container col-sm-6 col-lg-4" style={{ minWidth: '350px' }} key={'event-card-' + index}>
                     <Card className="main-card " >
                         <Card.Header className="p-0">
                             <Card.Img src="https://static.todamateria.com.br/upload/ab/ob/aboboras2-cke.jpg" />
@@ -52,13 +51,24 @@ const MainPage = () => {
         }
 
         {showCreationForm ? (
-            <Form className="border rounded-1 position-fixed w-75 h-75 bg-body py-4 px-2"  >
-                <Row className="d-flex px-2 justify-content-end">
-                    <Button className="  rounded-circle" style={{ width: 'auto' }} onClick={() => setShowCreationForm(false)}>
-                        <i className="bi bi-plus" width="32" height="32"></i>
+            <Form className="border  rounded-1 position-fixed w-75 h-75 bg-body py-4 px-3" style={{}}  >
+                <Row className="d-flex px-2 justify-content-between">
+                    <div style={{ width: 'auto' }}>Criar Evento</div>
+                    <Button className="rounded-circle bg-body border-0" style={{ width: 'auto' }} onClick={() => setShowCreationForm(false)}>
+                        <i className="bi bi-x-lg" width="32" height="32"></i>
                         {showCreationForm}
                     </Button>
+                </Row>
 
+                <Row>
+                    <Form.Group as={Col} controlId="formGridEventName">
+                        <Form.Label>Nome do Evento</Form.Label>
+                        <Form.Control placeholder="Digite o nome" />
+                    </Form.Group>
+                    <Form.Group as={Col} controlId="formGridEventLocation">
+                        <Form.Label>Local do Evento</Form.Label>
+                        <Form.Control placeholder="Selecione o Local" />
+                    </Form.Group>
                 </Row>
 
             </Form>
