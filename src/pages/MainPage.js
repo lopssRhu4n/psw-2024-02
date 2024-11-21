@@ -23,7 +23,9 @@ const MainPage = () => {
                         </Card.Header>
                         <Card.Body>
                             <Card.Title>{val.title}</Card.Title>
-                            <Card.Text className="mb-3">{val.description}</Card.Text>
+                            <Card.Text className="mb-3">
+                                {val.description}
+                            </Card.Text>
                             <Row className="mb-4">
                                 <Card.Text className="col-6 m-0 text-start d-flex align-items-center">
                                     <i className="bi bi-geo-alt-fill me-3"></i>
