@@ -22,7 +22,7 @@ const MainLayout = (props) => {
                 </Nav.Link>
                 <Nav.Link as={NavLink} to="/profile" className=" mt-sm-auto  mb-sm-3 order-3 order-sm-5 pa-0 " style={{ height: "60px" }} >
                     <Image src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/025.png" style={{ width: '50px' }} className="bg-primary p-2 rounded-circle" rounded fluid />
-                    <p className="nav-link-text small ">Rhuan </p>
+                    <p className="nav-link-text small ">     </p>
                 </Nav.Link>
             </Nav>
         </ Navbar>

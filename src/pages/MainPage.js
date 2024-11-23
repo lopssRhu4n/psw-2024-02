@@ -1,4 +1,4 @@
-import { Button, Card, Col, Container, Form, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import { Button, Card, Col, Form, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import { useState } from "react";
 import { defaultEventList } from "../models/Event";
 import '../styles/MainPage.css'
