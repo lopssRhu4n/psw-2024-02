@@ -1,10 +1,11 @@
-import { Button, Card, Col, Container, Form, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import { Button, Card, Col, Form, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import { useState } from "react";
-import { defaultEventList } from "../models/Event";
+// import { defaultEventList } from "../models/Event";
 import '../styles/MainPage.css'
+import { useSelector } from "react-redux";
 
 const MainPage = () => {
-    const [eventList] = useState(defaultEventList);
+    const eventList = useSelector(state => state.event.eventList);
     const [showCreationForm, setShowCreationForm] = useState(false);
     const renderTooltip = (props) => (
         <Tooltip id="button-tooltip" {...props}>
