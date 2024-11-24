@@ -1,11 +1,19 @@
 import { Button, Card, Col, Form, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
-import { useState } from "react";
-// import { defaultEventList } from "../models/Event";
+import { useEffect, useState } from "react";
 import '../styles/MainPage.css'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchEventList, selectEventList, selectEventsStatus } from "../store/slices/EventSlice";
 
 const MainPage = () => {
-    const eventList = useSelector(state => state.event.eventList);
+    const eventList = useSelector(state => selectEventList(state));
+    const dispatch = useDispatch();
+    const eventListFetchingStatus = useSelector(state => selectEventsStatus(state));
+
+    useEffect(() => {
+        dispatch(fetchEventList());
+    }, [eventListFetchingStatus, dispatch]);
+
+
     const [showCreationForm, setShowCreationForm] = useState(false);
     const renderTooltip = (props) => (
         <Tooltip id="button-tooltip" {...props}>
@@ -14,7 +22,7 @@ const MainPage = () => {
     );
 
     return (<div fluid="sm" className="mx-auto  main-container pt-5 mb-5  gx-4 gy-5 row justify-content-center" style={{ width: '90%' }} >
-        <h1 className="col-12"> Eventos</h1>
+        <h1 className="col-12"> Eventos </h1>
         {
             eventList.map((val, index) =>
                 <div className="main-card-container col-sm-6 col-lg-4" style={{ minWidth: '350px' }} key={'event-card-' + index}>

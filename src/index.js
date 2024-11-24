@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/Variables.css';
 import reportWebVitals from './reportWebVitals';
-import store from './store/index';
+import { store } from './store/index';
 import { Provider } from 'react-redux';
 
 
