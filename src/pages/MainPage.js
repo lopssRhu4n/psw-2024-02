@@ -2,6 +2,12 @@ import { Button, Card, Col, Form, OverlayTrigger, Row, Tooltip } from "react-boo
 import { useState } from "react";
 import { defaultEventList } from "../models/Event";
 import '../styles/MainPage.css'
+<<<<<<< Updated upstream
+=======
+import { useDispatch, useSelector } from "react-redux";
+import { addNewEvent, fetchEventList, selectEventList, selectEventsStatus } from "../store/slices/EventSlice";
+import Header from '../components/header/header';
+>>>>>>> Stashed changes
 
 const MainPage = () => {
     const [eventList] = useState(defaultEventList);
@@ -13,7 +19,13 @@ const MainPage = () => {
     );
 
     return (<div fluid="sm" className="mx-auto  main-container pt-5 mb-5  gx-4 gy-5 row justify-content-center" style={{ width: '90%' }} >
+<<<<<<< Updated upstream
         <h1 className="col-12"> Eventos</h1>
+=======
+       
+ 
+        <h1 className="col-12"> Eventos </h1>
+>>>>>>> Stashed changes
         {
             eventList.map((val, index) =>
                 <div className="main-card-container col-sm-6 col-lg-4" style={{ minWidth: '350px' }} key={'event-card-' + index}>

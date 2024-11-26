@@ -2,11 +2,11 @@ import React from "react";
 import "../styles/Bar.css";
 import { Image, Nav, Navbar } from "react-bootstrap"
 import { Outlet, NavLink } from "react-router-dom";
+import Auth from '../pages/AuthPage'
 // import { Container } from "react-bootstrap";
 
 const MainLayout = (props) => {
     return (<div className="scroll-container max-vw-100 vh-100 overflow-y-auto position-relative">
-
         <Navbar className="bar shadow-lg z-1 position-fixed  d-flex flex-row flex-sm-column justify-content-center justify-content-sm-start  align-items-center py-1 px-3 px-sm-1 pt-sm-5  flex-shrink-0 bg-body-tertiary" >
             <Navbar.Brand className="m-0 text-center mb-3 my-brand" style={{ fontSize: "12px" }}>Evente-se</Navbar.Brand>
             <Nav className="flex-sm-column   justify-content-around justify-content-sm-start w-100 h-100">
