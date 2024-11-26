@@ -30,10 +30,10 @@ const MainPage = () => {
     return (<div fluid="sm" className="mx-auto  main-container pt-5 mb-5  gx-4 gy-5 row justify-content-center" style={{ width: '90%' }} >
         <h1 className="col-12"> Eventos </h1>
         {
-            // eventList.map((val, index) =>
-            //     <div className="main-card-container col-sm-6 col-lg-4" style={{ minWidth: '350px' }} key={'event-card-' + index}>
-            //         <EventCard val={val} />
-            //     </div>)
+            eventList.map((val, index) =>
+                <div className="main-card-container col-sm-6 col-lg-4" style={{ minWidth: '350px' }} key={'event-card-' + index}>
+                    <EventCard val={val} />
+                </div>)
         }
 
         {showCreationForm ? (

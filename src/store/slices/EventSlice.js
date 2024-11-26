@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
 
-const eventsAdapter = createEntityAdapter({
-    selectId: event => event.id
-});
+const eventsAdapter = createEntityAdapter();
 
 const initialState = eventsAdapter.getInitialState(
     {
@@ -53,9 +51,7 @@ export const eventSlice = createSlice({
             }).addCase(fetchEventList.fulfilled, (state, action) => {
                 state.status = 'completed';
                 // state.entities = action.payload;
-                console.log('payload')
-                console.log(action.payload)
-                eventsAdapter.setAll(action.payload)
+                eventsAdapter.setAll(state, action.payload)
             }).addCase(fetchEventList.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message ?? 'Erro ao buscar listagem de eventos';
