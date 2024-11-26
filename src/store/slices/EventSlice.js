@@ -12,7 +12,6 @@ const initialState = eventsAdapter.getInitialState(
 
 export const fetchEventList = createAsyncThunk('event/fetchEventList', async () => {
     const response = await (await fetch('http://localhost:3004/events')).json();
-    console.log(response);
     return response;
 }
     , {
@@ -24,11 +23,16 @@ export const fetchEventList = createAsyncThunk('event/fetchEventList', async () 
         }
     });
 
-export const addNewEvent = createAsyncThunk('event/addNewEvent', async (newEvent) => {
-    const response = await fetch('http://localhost:3004/events', {
+export const addNewEvent = createAsyncThunk('event/addNewEvent', async (
+    newEvent
+    //  thunkApi
+) => {
+    const response = await (await fetch('http://localhost:3004/events', {
         method: 'POST',
         body: JSON.stringify(newEvent),
-    });
+    })).json();
+
+    // thunkApi.dispatch(fetchEventList());
     return response;
 });
 
@@ -60,7 +64,7 @@ export const eventSlice = createSlice({
                 state.statusCreation = 'pending';
             }).addCase(addNewEvent.fulfilled, (state, action) => {
                 state.status = 'completed';
-                console.log(action.payload)
+                eventsAdapter.addOne(state, action.payload);
             }).addCase(addNewEvent.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message ?? 'Erro ao criar evento'
@@ -74,7 +78,7 @@ export const { eventAdded } = eventSlice.actions;
 
 export default eventSlice.reducer;
 
-export const { selectAll: selectAllEvents, selectById: selectEventById } = eventsAdapter.getSelectors((state) => state.event);
+export const { selectAll: selectAllEvents, selectById: selectEventById, selectIds: selectEventsIds } = eventsAdapter.getSelectors((state) => state.event);
 
 export const selectEventsStatus = (state) => state.event.status;
 

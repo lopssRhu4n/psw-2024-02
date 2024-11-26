@@ -1,0 +1,15 @@
+.icon-overlay {
+    width: 50px;
+    right: 10px;
+    bottom: 100px;
+    cursor: pointer;
+}
+
+@media (min-width: 440px) {
+    .icon-overlay {
+        width: 90px;
+        right: 50px;
+        bottom: 40px;
+    }
+
+}

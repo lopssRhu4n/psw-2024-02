@@ -8,7 +8,6 @@ import { fetchEventList, selectAllEvents, selectEventsStatus } from "../store/sl
 
 const MainPage = () => {
     const eventList = useSelector(selectAllEvents);
-    console.log(eventList)
     const dispatch = useDispatch();
     const eventListFetchingStatus = useSelector(state => selectEventsStatus(state));
 
@@ -27,8 +26,8 @@ const MainPage = () => {
 
 
 
-    return (<div fluid="sm" className="mx-auto  main-container pt-5 mb-5  gx-4 gy-5 row justify-content-center" style={{ width: '90%' }} >
-        <h1 className="col-12"> Eventos </h1>
+    return (<div fluid="sm" className="mx-auto  main-container  mb-5  gx-4 gy-5 row justify-content-center" style={{ width: '90%' }} >
+        {/* <h1 className="col-12 mt-0"> Eventos </h1> */}
         {
             eventList.map((val, index) =>
                 <div className="main-card-container col-sm-6 col-lg-4" style={{ minWidth: '350px' }} key={'event-card-' + index}>
@@ -37,7 +36,7 @@ const MainPage = () => {
         }
 
         {showCreationForm ? (
-            <EventForm isUpdateForm={false} setShowCreationForm={setShowCreationForm} showCreationForm={showCreationForm} />
+            <EventForm isUpdateForm={false} setShowForm={setShowCreationForm} showForm={showCreationForm} />
         ) : (
             <OverlayTrigger
                 placement="bottom"

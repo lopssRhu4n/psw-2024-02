@@ -1,13 +1,4 @@
-.bar {
-    height: 4.75rem;
-    width: 100vw;
-    bottom: 0%;
-}
-
-.container-box {
-    height: 100dvh;
-    width: 100dvw;
-}
+.bar {}
 
 .nav-link-text {
     display: none;
@@ -27,26 +18,11 @@
         display: inline-block;
     }
 
-    .bar {
-        height: 100vh;
-        width: 4.75rem;
-        transition: width .3s ease-in-out;
-    }
+    .bar {}
 
-    .bar:hover {
-        width: 225px;
-    }
+    .bar:hover {}
 
-    .bar:hover .nav-link-text {
-        display: inline-block;
-        margin-left: 6px;
-        width: 130px;
-        transition: all .3s ease-in-out;
-        visibility: visible;
-        opacity: 1;
-    }
+    .bar:hover .nav-link-text {}
 
-    .my-brand {
-        display: block;
-    }
+    .my-brand {}
 }

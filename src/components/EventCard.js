@@ -10,13 +10,20 @@ export const EventCard = (props) => {
     return (
         <Card className="main-card h-100" onClick={handleClick}>
             <Card.Header className="p-0">
-                <Card.Img src={props.val.img ?? PlaceholderImage} />
+                <Card.Img
+
+                    onError={({ currentTarget }) => {
+                        currentTarget.onerror = null; // prevents looping
+                        currentTarget.src = PlaceholderImage;
+                    }}
+                    src={props.val.img ?? PlaceholderImage}
+                />
             </Card.Header>
             <Card.Body>
                 <Card.Title>{props.val.title}</Card.Title>
-                <Card.Text className="mb-3">
+                {/* <Card.Text className="mb-3">
                     {props.val.description}
-                </Card.Text>
+                </Card.Text> */}
                 <Row className="mb-4 mt-auto">
                     <Card.Text className="col-6 m-0 text-start d-flex align-items-center">
                         <i className="bi bi-geo-alt-fill me-3"></i>
