@@ -1,7 +1,20 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
+
+const eventsAdapter = createEntityAdapter({
+    selectId: event => event.id
+});
+
+const initialState = eventsAdapter.getInitialState(
+    {
+        status: 'idle',
+        statusCreation: 'idle',
+        error: null
+    }
+);
 
 export const fetchEventList = createAsyncThunk('event/fetchEventList', async () => {
     const response = await (await fetch('http://localhost:3004/events')).json();
+    console.log(response);
     return response;
 }
     , {
@@ -23,18 +36,9 @@ export const addNewEvent = createAsyncThunk('event/addNewEvent', async (newEvent
 
 export const eventSlice = createSlice({
     name: 'Event',
-    initialState: {
-        eventList: [],
-        status: 'idle',
-        statusCreation: 'idle',
-        error: null
-    },
-
-
+    initialState,
     reducers: {
-        eventAdded: (state, action) => {
-            state.eventList.push(action.payload);
-        }
+
     },
 
     extraReducers:
@@ -48,7 +52,10 @@ export const eventSlice = createSlice({
                 state.status = 'pending';
             }).addCase(fetchEventList.fulfilled, (state, action) => {
                 state.status = 'completed';
-                state.eventList = action.payload;
+                // state.entities = action.payload;
+                console.log('payload')
+                console.log(action.payload)
+                eventsAdapter.setAll(action.payload)
             }).addCase(fetchEventList.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message ?? 'Erro ao buscar listagem de eventos';
@@ -71,7 +78,7 @@ export const { eventAdded } = eventSlice.actions;
 
 export default eventSlice.reducer;
 
-export const selectEventList = (state) => state.event.eventList;
+export const { selectAll: selectAllEvents, selectById: selectEventById } = eventsAdapter.getSelectors((state) => state.event);
 
 export const selectEventsStatus = (state) => state.event.status;
 

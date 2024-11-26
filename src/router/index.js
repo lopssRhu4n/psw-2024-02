@@ -5,10 +5,12 @@ import EventPage from "../pages/EventPage";
 import FeedbackPage from "../pages/FeedbackPage";
 import InvitePage from "../pages/InvitePage";
 import MainLayout from "../layouts/MainLayout";
+import App from "../App"
 
 const router = createHashRouter([
     {
         path: '/',
+        // element: <App />,
         element: <MainLayout />,
         errorElement: <ErrorPage />,
         children: [
@@ -16,8 +18,12 @@ const router = createHashRouter([
                 path: '/',
                 element: <MainPage />
             },
+            // {
+            //     path: '/event',
+            //     element: <EventPage />
+            // },
             {
-                path: '/event',
+                path: '/event/:id',
                 element: <EventPage />
             },
             {

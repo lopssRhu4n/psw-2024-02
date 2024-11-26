@@ -10,7 +10,8 @@
       "start_time": "17:50",
       "end_time": "02:30",
       "capacity": 50,
-      "used_capacity": 20
+      "used_capacity": 20,
+      "img": "https://static.todamateria.com.br/upload/ab/ob/aboboras2-cke.jpg"
     },
     {
       "id": "2",
@@ -22,7 +23,8 @@
       "start_time": "17:50",
       "end_time": "02:30",
       "capacity": 50,
-      "used_capacity": 20
+      "used_capacity": 20,
+      "img": "https://static.todamateria.com.br/upload/ab/ob/aboboras2-cke.jpg"
     },
     {
       "id": "3",
@@ -34,7 +36,8 @@
       "start_time": "17:50",
       "end_time": "02:30",
       "capacity": 50,
-      "used_capacity": 20
+      "used_capacity": 20,
+      "img": "https://static.todamateria.com.br/upload/ab/ob/aboboras2-cke.jpg"
     },
     {
       "id": "4",
@@ -46,7 +49,8 @@
       "start_time": "17:50",
       "end_time": "02:30",
       "capacity": 50,
-      "used_capacity": 20
+      "used_capacity": 20,
+      "img": "https://static.todamateria.com.br/upload/ab/ob/aboboras2-cke.jpg"
     },
     {
       "id": "5",
@@ -107,6 +111,18 @@
       "capacity": "21",
       "price": "22",
       "description": "Testar as paradas."
+    },
+    {
+      "id": "eb47",
+      "title": "Teste 2",
+      "location": "Rj",
+      "main_image": "C:\\fakepath\\placeholder.jpeg",
+      "date": "11111-11-11",
+      "start_time": "22:32",
+      "end_time": "23:32",
+      "capacity": "21",
+      "price": "30",
+      "description": "Testar se o for consegue ser um componente próprio."
     }
   ]
 }

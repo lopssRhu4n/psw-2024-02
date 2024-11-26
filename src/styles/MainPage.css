@@ -30,7 +30,7 @@
     animation-timeline: view(100% 70%);
 }
 
-@keyframes autoShow {
+/* @keyframes autoShow {
     from {
         opacity: 0;
         transform: translatex(100px);
@@ -40,9 +40,9 @@
         opacity: 1;
         transform: translatex(0);
     }
-}
+} */
 
-@keyframes avoidHover {
+/* @keyframes avoidHover {
     from {
         pointer-events: none;
     }
@@ -50,7 +50,7 @@
     to {
         pointer-events: all;
     }
-}
+} */
 
 .main-card-container::after
 

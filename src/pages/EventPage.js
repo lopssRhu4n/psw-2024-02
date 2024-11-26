@@ -1,7 +1,8 @@
-import { Container } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
 const EventPage = () => {
-    return <Container fluid="sm" className="min-vh-100 vw-75"><h1>Criar Evento</h1></Container>
+    const { id } = useParams();
+    return <div className="text-center"><h1>Tela do Evento {id}</h1></div>
 
 
 }
