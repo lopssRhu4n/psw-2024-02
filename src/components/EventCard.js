@@ -31,7 +31,7 @@ export const EventCard = (props) => {
                     </Card.Text>
                     <Card.Text className="col-6 m-0 text-end d-flex align-items-center justify-content-end">
                         <i className="bi bi-coin me-3"></i>
-                        {props.val.price}
+                        R$ {props.val.price}
                     </Card.Text>
                 </Row>
                 <Row>

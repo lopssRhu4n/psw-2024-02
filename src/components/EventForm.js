@@ -1,19 +1,11 @@
 import { Form, Row, Button, Col, Image } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { addNewEvent, selectEventById, selectEventsIds } from "../store/slices/EventSlice";
+import { useDispatch, } from "react-redux";
+import { addNewEvent, updateEvent } from "../store/slices/EventSlice";
 import placeHolderImg from "../assets/placeholder.jpeg";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 
 export const EventForm = (props) => {
     const dispatch = useDispatch();
-    // const { id } = useParams()
-    // const ids = useSelector(selectEventsIds);
-
-    // const eventById = useSelector(state => selectEventById(state, props.id));
-    // console.log(eventById);
-
-    console.log(props.data)
 
     const [event, setEvent] = useState(props.data ?? {
         title: '',
@@ -36,9 +28,14 @@ export const EventForm = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        let creationData = { ...event };
-        creationData.used_capacity = 0
-        dispatch(addNewEvent(creationData));
+        let requestData = { ...event };
+        if (props.data) {
+            dispatch(updateEvent(requestData))
+        } else {
+            requestData.used_capacity = 0
+            dispatch(addNewEvent(requestData));
+
+        }
         props.setShowForm(false);
 
 

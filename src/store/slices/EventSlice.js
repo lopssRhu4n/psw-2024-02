@@ -23,10 +23,7 @@ export const fetchEventList = createAsyncThunk('event/fetchEventList', async () 
         }
     });
 
-export const addNewEvent = createAsyncThunk('event/addNewEvent', async (
-    newEvent
-    //  thunkApi
-) => {
+export const addNewEvent = createAsyncThunk('event/addNewEvent', async (newEvent) => {
     const response = await (await fetch('http://localhost:3004/events', {
         method: 'POST',
         body: JSON.stringify(newEvent),
@@ -35,6 +32,15 @@ export const addNewEvent = createAsyncThunk('event/addNewEvent', async (
     // thunkApi.dispatch(fetchEventList());
     return response;
 });
+
+export const updateEvent = createAsyncThunk('event/updateEvent', async (eventData) => {
+    const response = await (await fetch('http://localhost:3004/events/' + eventData.id, {
+        method: 'PUT',
+        body: JSON.stringify(eventData),
+    })).json();
+
+    return response;
+})
 
 export const eventSlice = createSlice({
     name: 'Event',
@@ -63,11 +69,15 @@ export const eventSlice = createSlice({
             }).addCase(addNewEvent.pending, (state, action) => {
                 state.statusCreation = 'pending';
             }).addCase(addNewEvent.fulfilled, (state, action) => {
-                state.status = 'completed';
+                state.statusCreation = 'completed';
                 eventsAdapter.addOne(state, action.payload);
+                state.status = 'idle';
             }).addCase(addNewEvent.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message ?? 'Erro ao criar evento'
+            }).addCase(updateEvent.fulfilled, (state, action) => {
+                eventsAdapter.setOne(state, action.payload);
+                state.status = 'idle';
             });
 
         }
