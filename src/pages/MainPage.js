@@ -6,6 +6,7 @@ import '../styles/MainPage.css'
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEventList, selectAllEvents, selectEventsStatus } from "../store/slices/EventSlice";
 
+
 const MainPage = () => {
     const eventList = useSelector(selectAllEvents);
     const dispatch = useDispatch();

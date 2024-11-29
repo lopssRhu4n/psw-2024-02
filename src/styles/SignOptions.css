@@ -1,0 +1,12 @@
+.sign-banner {
+    margin-top: 0px;
+    position: relative;
+    z-index: 1000;
+    background-color: #11111b;
+    border-radius: 0 0 20px 20px;
+    padding: 20px;
+    width: 100%;
+    box-shadow: 0 0 10px 4px #11111b;
+    text-align: center;
+    color: #cdd6f4;
+}

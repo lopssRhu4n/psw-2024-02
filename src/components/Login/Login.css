@@ -1,0 +1,11 @@
+.login-block {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    background-color: #11111b;
+    border-radius: 20px;
+    padding: 8px;
+    max-width: 80%;
+    text-align: center;
+}
