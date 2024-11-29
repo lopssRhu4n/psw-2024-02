@@ -45,16 +45,8 @@ export const updateEvent = createAsyncThunk('event/updateEvent', async (eventDat
 export const eventSlice = createSlice({
     name: 'Event',
     initialState,
-    reducers: {
-
-    },
-
+    reducers: {},
     extraReducers:
-        // {
-        //     [fetchEventList.pending]: (state, action) => { console.log('state pending: ' + state) },
-        //     [fetchEventList.fulfilled]: (state, action) => { console.log('state fulfilled: ' + state) },
-        //     [fetchEventList.rejected]: (state, action) => { console.log('state rejected: ' + state) }
-        // }
         builder => {
             builder.addCase(fetchEventList.pending, (state, action) => {
                 state.status = 'pending';
@@ -82,9 +74,6 @@ export const eventSlice = createSlice({
 
         }
 })
-
-
-export const { eventAdded } = eventSlice.actions;
 
 export default eventSlice.reducer;
 

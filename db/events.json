@@ -217,5 +217,14 @@
       "used_capacity": 0,
       "img": ""
     }
+  ],
+  "users": [
+    {
+      "id": "c893",
+      "name": "Rhuan Lopes Silva",
+      "cpf": "17067262798",
+      "email": "rhuanlopes536@gmail.com",
+      "password": "123"
+    }
   ]
 }

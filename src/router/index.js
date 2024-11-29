@@ -5,6 +5,9 @@ import EventPage from "../pages/EventPage";
 import FeedbackPage from "../pages/FeedbackPage";
 import InvitePage from "../pages/InvitePage";
 import MainLayout from "../layouts/MainLayout";
+import AuthLayout from "../layouts/AuthLayout";
+import LoginPage from "../pages/LoginPage";
+import RegisterPage from "../pages/RegisterPage";
 
 const router = createHashRouter([
     {
@@ -34,6 +37,21 @@ const router = createHashRouter([
                 element: <InvitePage />
             }
         ]
+    },
+    {
+        path: '/auth',
+        element: <AuthLayout />,
+        children: [
+            {
+                path: '/auth/login',
+                element: <LoginPage />
+            },
+            {
+                path: '/auth/register',
+                element: <RegisterPage />
+            }
+        ],
+        errorElement: <ErrorPage />
     }
 ]);
 

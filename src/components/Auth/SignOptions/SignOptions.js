@@ -11,7 +11,7 @@ const Sign = ({ onSwitch }) => {
                     <Col>
                         <Button
                             className="sign-options"
-                            onClick={() => onSwitch("register")} 
+                            onClick={() => onSwitch("register")}
                         >
                             Cadastre-se
                         </Button>
@@ -19,7 +19,7 @@ const Sign = ({ onSwitch }) => {
                     <Col>
                         <Button
                             className="sign-options"
-                            onClick={() => onSwitch("login")} 
+                            onClick={() => onSwitch("login")}
                         >
                             Entrar
                         </Button>
