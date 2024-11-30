@@ -8,14 +8,21 @@ const initialState = authAdapter.getInitialState(
     authError: '',
     status: 'idle',
     creationStatus: 'idle',
-    error: null
+    error: ''
   }
 );
 
 export const fetchUsersList = createAsyncThunk('auth/fetchUsers', async () => {
   const response = await (await fetch('http://localhost:3004/users')).json();
   return response;
-});
+},
+  {
+    condition: (arg, thunkApi) => {
+      const fetchStatus = selectCurrentAuthStatus(thunkApi.getState());
+      return !(fetchStatus !== 'idle');
+    }
+  }
+);
 
 export const registerNewUser = createAsyncThunk('auth/registerNewUser', async (newUser) => {
   const response = await (await fetch('http://localhost:3004/users', {
@@ -32,14 +39,16 @@ export const authSlice = createSlice({
   reducers: {
     userLoggedIn: (state, action) => {
       // Realizando login "local"
-      const userMatchedCredentials = state.entities.find((val) => val.email === action.payload.email && val.password === action.payload.password);
+      const userList = Object.values(state.entities);
+      const userMatched = userList.find((val) => val.email === action.payload.email && val.password === action.payload.password);
 
-      if (userMatchedCredentials) {
-        state.user = action.payload;
+      if (userMatched) {
+        state.user = userMatched;
+        state.authError = '';
         return;
       }
 
-      state.error = 'Credenciais inválidas.';
+      state.authError = 'Credenciais inválidas.';
 
     },
 
@@ -63,7 +72,6 @@ export const authSlice = createSlice({
       state.user = action.payload;
       state.creationStatus = 'completed';
     }).addCase(registerNewUser.rejected, (state, action) => {
-      console.log(action)
       state.status = 'failed';
       state.error = 'Erro ao registrar-se.';
     });
@@ -74,13 +82,14 @@ export const authSlice = createSlice({
 
 export default authSlice.reducer;
 
+export const { userLoggedIn, userLoggedOut } = authSlice.actions;
+
 export const { selectAll: selectAllUsers } = authSlice.getSelectors((state) => state.user);
 
-export const selectCurrentUser = (state) => state.auth.currentUser;
+export const selectCurrentUser = (state) => state.auth.user;
 
 export const selectCurrentAuthStatus = (state) => state.auth.status;
 
 export const selectUsersStatus = (state) => state.user.status;
 
-export const selectUsersError = (state) => state.user.status;
-
+export const selectAuthError = (state) => state.auth.authError;

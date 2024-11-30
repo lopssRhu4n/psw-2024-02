@@ -8,6 +8,7 @@ import MainLayout from "../layouts/MainLayout";
 import AuthLayout from "../layouts/AuthLayout";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
+import ProfilePage from "../pages/ProfilePage";
 
 const router = createHashRouter([
     {
@@ -35,6 +36,10 @@ const router = createHashRouter([
             {
                 path: '/invite',
                 element: <InvitePage />
+            },
+            {
+                path: '/profile',
+                element: <ProfilePage />
             }
         ]
     },

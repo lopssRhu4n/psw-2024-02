@@ -1,5 +1,9 @@
 /* Palhetas: https://catppuccin.com/palette Mocha para Dark mode e Latte para Light mode */
 
+body {
+    /* --bs-border-radius: 0.125rem; */
+}
+
 [data-bs-theme=light] {
     --bs-body-color: #4c4f69;
     --bs-body-color-rgb: 76, 79, 105;
@@ -21,6 +25,14 @@
     --bs-tertiary-color-rgb: 166, 173, 200;
     --bs-tertiary-bg: #11111b;
     --bs-tertiary-bg-rgb: 17, 17, 27;
+    --bs-primary: #89b4fa;
+    --bs-primary-rgb: 137, 180, 250;
+    /* --bs-primary-bg: #89b4fa;
+    --bs-primary-bg-rgb: 137, 180, 250; */
+    --bs-primary-color: #9399b2;
+    --bs-primary-color-rgb: 147, 153, 178;
+
+
 
 
     /* --bs-emphasis-color: #fff;

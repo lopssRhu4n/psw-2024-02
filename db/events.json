@@ -216,6 +216,19 @@
       "capacity": "1",
       "used_capacity": 0,
       "img": ""
+    },
+    {
+      "id": "6dd7",
+      "title": "teste",
+      "description": "a",
+      "location": "teste",
+      "price": "1",
+      "date": "1111-11-11",
+      "start_time": "11:11",
+      "end_time": "11:11",
+      "capacity": "-11",
+      "used_capacity": 0,
+      "img": ""
     }
   ],
   "users": [
@@ -224,6 +237,7 @@
       "name": "Rhuan Lopes Silva",
       "cpf": "17067262798",
       "email": "rhuanlopes536@gmail.com",
+      "profile_image": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/025.png",
       "password": "123"
     }
   ]
