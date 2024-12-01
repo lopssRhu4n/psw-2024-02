@@ -88,6 +88,8 @@ export const { selectAll: selectAllUsers } = authSlice.getSelectors((state) => s
 
 export const selectCurrentUser = (state) => state.auth.user;
 
+export const selectIsAuthenticated = (state) => Object.keys(state.auth.user).length;
+
 export const selectCurrentAuthStatus = (state) => state.auth.status;
 
 export const selectUsersStatus = (state) => state.user.status;

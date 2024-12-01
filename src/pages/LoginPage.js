@@ -3,25 +3,31 @@ import { Button, Form, Row } from "react-bootstrap";
 import { handleInput } from "../utils/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchUsersList, selectAuthError, userLoggedIn } from "../store/slices/AuthSlice";
+import { fetchUsersList, selectAuthError, selectIsAuthenticated, userLoggedIn } from "../store/slices/AuthSlice";
 
 const LoginPage = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [credentials, setCredentials] = useState({ email: '', password: '' })
-
     const error = useSelector(selectAuthError);
+    const isAuthenticated = useSelector(selectIsAuthenticated);
+
+    useEffect(() => {
+        if (!error && isAuthenticated) {
+            navigate('/');
+        } else if (error) {
+            setCredentials({ email: '', password: '' });
+        }
+    },
+        [error, isAuthenticated, navigate])
+
 
     dispatch(fetchUsersList());
 
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(userLoggedIn(credentials));
-
-
-        if (!error)
-            navigate('/');
     }
 
     return (

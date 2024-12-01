@@ -29,7 +29,13 @@ const MainLayout = (props) => {
                 <Nav.Link as={NavLink} to="/notifications" className="text-center  d-sm-flex justify-content-center align-items-center   pa-0" style={{ height: "60px" }}><i className="bi bi-bell h4 mb-none mx-4" style={{ marginBottom: 0 }}></i>
                 </Nav.Link>
                 <Nav.Link as={NavLink} to={Object.keys(user).length ? '/profile' : '/auth/register'} className="pa-0 " style={{ height: "60px" }} >
-                    <Image src={user.profile_image ?? defaultProfilePlaceholder} style={{ width: '50px' }} className="bg-primary p-2 rounded-circle" rounded fluid />
+                    <Image
+                        onError={({ currentTarget }) => {
+                            currentTarget.onerror = null; // prevents looping
+                            currentTarget.src = defaultProfilePlaceholder;
+                        }}
+
+                        src={user.profile_image ?? defaultProfilePlaceholder} style={{ width: '50px' }} className="bg-primary p-2 rounded-circle" rounded fluid />
                 </Nav.Link>
                 {
                     userExists ?
