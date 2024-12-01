@@ -238,7 +238,23 @@
       "cpf": "17067262798",
       "email": "rhuanlopes536@gmail.com",
       "profile_image": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/025.png",
-      "password": "123"
+      "password": "12345678"
+    },
+    {
+      "id": "8634",
+      "name": "Rhuan Lopes Silva",
+      "cpf": "111.111.111-11",
+      "email": "a@a.com",
+      "password": "Teste@123",
+      "confirmPassword": "Teste@123"
+    },
+    {
+      "id": "ad02",
+      "name": "rhuan lopes silva",
+      "cpf": "170.672.627-98",
+      "email": "rhuaa@rhuan.com",
+      "password": "12312345@Ee",
+      "confirmPassword": "12312345@Ee"
     }
   ]
 }

@@ -3,9 +3,15 @@ import { useDispatch, } from "react-redux";
 import { addNewEvent, updateEvent } from "../store/slices/EventSlice";
 import placeHolderImg from "../assets/placeholder.jpeg";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { eventSchema } from "../validation/EventSchema";
 
 export const EventForm = (props) => {
     const dispatch = useDispatch();
+    const { handleSubmit: h, register, formState: { errors } } = useForm({
+        resolver: yupResolver(props.data ? eventSchema.cast(props.data) : eventSchema)
+    })
 
     const [event, setEvent] = useState(props.data ?? {
         title: '',
