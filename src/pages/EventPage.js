@@ -6,11 +6,13 @@ import { fetchEventList, selectEventById } from "../store/slices/EventSlice";
 import '../styles/EventPage.css'
 import { useState } from "react";
 import { EventForm } from "../components/EventForm";
+import { selectCurrentUser, selectIsAuthenticated } from "../store/slices/AuthSlice";
 
 const EventPage = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isAuthenticated = useSelector(selectIsAuthenticated);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
 
     const handleNavigate = () => {
@@ -20,10 +22,11 @@ const EventPage = () => {
     dispatch(fetchEventList());
 
 
-    const isUserEvent = true;
+    const currentUser = useSelector(selectCurrentUser);
 
     const event = useSelector((state) => selectEventById(state, id));
 
+    const isUserEvent = currentUser?.id === event?.user_id;
 
     return <Container fluid="md" >
         {showFormUpdate ? <EventForm setShowForm={setShowFormUpdate} showForm={showFormUpdate} data={event} /> : ''}
@@ -49,20 +52,15 @@ const EventPage = () => {
                     {event?.date} | {event?.start_time} - {event?.end_time}
                 </Card.Text>
             </Card.ImgOverlay>
-            {/* <ListGroup className="list-group-flush"> */}
-            {/* <ListGroup.Item className="mt-2">{event?.description}</ListGroup.Item> */}
-            {/* <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-                <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-            </ListGroup> */}
             <Card.Body className="h-100 d-flex flex-column justify-content-between">
 
                 <Card.Text className="mt-2">{event?.description}</Card.Text>
                 <div>
-                    {isUserEvent ? (<Button onClick={() => setShowFormUpdate(true)}>Editar</Button>) : (<Button>Participar</Button>)}
+                    {isUserEvent ? (<Button onClick={() => setShowFormUpdate(true)}>Editar</Button>) : (<Button onClick={() => navigate(isAuthenticated ? '/path_para_criar_convite_próprio' : '/auth/register')}>Participar</Button>)}
                 </div>
             </Card.Body>
         </Card>
-    </Container  >
+    </Container>
 
 
 }

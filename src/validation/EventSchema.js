@@ -13,5 +13,6 @@ export const eventSchema = yup.object(
         start_time: yup.string().required(),
         end_time: yup.string().required(),
         capacity: yup.number().positive(),
+        img: yup.string()
     }
 ).required();

@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 import '../styles/MainPage.css'
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEventList, selectAllEvents, selectEventsStatus } from "../store/slices/EventSlice";
+import { selectIsAuthenticated } from "../store/slices/AuthSlice";
 
 
 const MainPage = () => {
     const eventList = useSelector(selectAllEvents);
     const dispatch = useDispatch();
-    const eventListFetchingStatus = useSelector(state => selectEventsStatus(state));
+    const eventListFetchingStatus = useSelector(selectEventsStatus);
+    const isAuthenticated = useSelector(selectIsAuthenticated);
 
     useEffect(() => {
         dispatch(fetchEventList());
@@ -25,21 +27,12 @@ const MainPage = () => {
         </Tooltip>
     );
 
-
-
-    return (<div fluid="sm" className="mx-auto  main-container  mb-5  gx-4 gy-5 row justify-content-center" style={{ width: '90%' }} >
-        {/* <h1 className="col-12 mt-0"> Eventos </h1> */}
-        {
-            eventList.map((val, index) =>
-                <div className="main-card-container col-sm-6 col-lg-4" style={{ minWidth: '350px' }} key={'event-card-' + index}>
-                    <EventCard val={val} />
-                </div>)
+    const formRendering = () => {
+        if (isAuthenticated && showCreationForm) {
+            return <EventForm isUpdateForm={false} setShowForm={setShowCreationForm} showForm={showCreationForm} />
         }
-
-        {showCreationForm ? (
-            <EventForm isUpdateForm={false} setShowForm={setShowCreationForm} showForm={showCreationForm} />
-        ) : (
-            <OverlayTrigger
+        else if (isAuthenticated) {
+            return <OverlayTrigger
                 placement="bottom"
                 delay={{ show: 100, hide: 100 }}
                 overlay={renderTooltip}
@@ -50,7 +43,21 @@ const MainPage = () => {
                 </Button>
             </OverlayTrigger>
 
-        )
+
+        }
+
+    }
+
+    return (<div fluid className="mx-auto  main-container  mb-5  gx-4 gy-5 row justify-content-center" style={{ width: '90%' }} >
+        {
+            eventList.map((val, index) =>
+                <div className="main-card-container col-sm-6 col-lg-4" style={{ minWidth: '350px' }} key={'event-card-' + index}>
+                    <EventCard val={val} />
+                </div>)
+        }
+
+        {
+            formRendering()
         }
     </div >);
 }
