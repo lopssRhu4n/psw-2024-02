@@ -9,7 +9,7 @@ export const eventSchema = yup.object(
             .required(),
         price: yup.number()
             .required().positive(),
-        date: yup.date().required(),
+        date: yup.date().required().min(new Date()),
         start_time: yup.string().required(),
         end_time: yup.string().required(),
         capacity: yup.number().positive(),

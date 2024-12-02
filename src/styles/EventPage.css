@@ -3,6 +3,23 @@
     right: 10px;
     bottom: 100px;
     cursor: pointer;
+    transition: all .15s ease-in-out;
+}
+
+.delete-overlay {
+    background-color: transparent;
+    right: 10px;
+    color: var(--bs-form-invalid-color);
+    border-color: var(--bs-form-invalid-color);
+    border-radius: 100%;
+    top: 20px;
+    cursor: pointer;
+    transition: all .15s ease-in-out;
+}
+
+.delete-overlay:hover,
+.icon-overlay:hover {
+    scale: 1.05;
 }
 
 @media (min-width: 440px) {
@@ -10,6 +27,11 @@
         width: 90px;
         right: 50px;
         bottom: 40px;
+    }
+
+    .delete-overlay {
+        right: 50px;
+        top: 20px;
     }
 
 }

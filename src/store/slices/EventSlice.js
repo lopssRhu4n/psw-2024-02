@@ -42,6 +42,14 @@ export const updateEvent = createAsyncThunk('event/updateEvent', async (eventDat
     return response;
 })
 
+export const deleteEvent = createAsyncThunk('event/deleteEvent', async (id) => {
+    const response = await (await fetch('http://localhost:3004/events/' + id, {
+        method: 'DELETE',
+    })).json();
+
+    return response;
+})
+
 export const eventSlice = createSlice({
     name: 'Event',
     initialState,
@@ -52,12 +60,10 @@ export const eventSlice = createSlice({
                 state.status = 'pending';
             }).addCase(fetchEventList.fulfilled, (state, action) => {
                 state.status = 'completed';
-                // state.entities = action.payload;
                 eventsAdapter.setAll(state, action.payload)
             }).addCase(fetchEventList.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message ?? 'Erro ao buscar listagem de eventos';
-
             }).addCase(addNewEvent.pending, (state, action) => {
                 state.statusCreation = 'pending';
             }).addCase(addNewEvent.fulfilled, (state, action) => {
@@ -70,6 +76,13 @@ export const eventSlice = createSlice({
             }).addCase(updateEvent.fulfilled, (state, action) => {
                 eventsAdapter.setOne(state, action.payload);
                 state.status = 'idle';
+            }).addCase(deleteEvent.pending, (state, action) => {
+                state.status = 'pending';
+            }).addCase(deleteEvent.rejected, (state, action) => {
+                state.status = 'failed';
+            }).addCase(deleteEvent.fulfilled, (state, action) => {
+                eventsAdapter.removeOne(state, action.payload.id);
+                state.status = 'idle'
             });
 
         }

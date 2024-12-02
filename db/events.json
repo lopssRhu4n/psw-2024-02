@@ -27,6 +27,48 @@
       "used_capacity": 0,
       "img": "",
       "user_id": "c893"
+    },
+    {
+      "img": "[object FileList]",
+      "capacity": 1,
+      "end_time": "23:11",
+      "start_time": "11:11",
+      "date": "2024-12-03T03:00:00.000Z",
+      "price": 4,
+      "location": "Cefet",
+      "description": "Testar a criação de formulário utilizadno yup.",
+      "title": "Evento Rhuan Atualizado 2",
+      "id": "608a",
+      "used_capacity": 0,
+      "user_id": "c893"
+    },
+    {
+      "id": "5e60",
+      "img": "[object FileList]",
+      "capacity": 2,
+      "end_time": "12:44",
+      "start_time": "23:44",
+      "date": "2024-12-01T03:00:00.000Z",
+      "price": 3,
+      "location": "testar",
+      "description": "testar como fuciona a criação depois de mudar o update",
+      "title": "Evento Rhuan Update com Yup",
+      "used_capacity": 0,
+      "user_id": "c893"
+    },
+    {
+      "id": "e036",
+      "img": "[object FileList]",
+      "capacity": 1,
+      "end_time": "04:06",
+      "start_time": "01:06",
+      "date": "2024-12-02T03:00:00.000Z",
+      "price": 1,
+      "location": "Pilares",
+      "description": "Testar criação a partir de outro usuário.",
+      "title": "Teste usuário 2",
+      "used_capacity": 0,
+      "user_id": "b56d"
     }
   ],
   "users": [
@@ -53,6 +95,14 @@
       "email": "rhuaa@rhuan.com",
       "password": "12312345@Ee",
       "confirmPassword": "12312345@Ee"
+    },
+    {
+      "id": "b56d",
+      "name": "Rhuan Lopes Silva",
+      "cpf": "170.672.627-98",
+      "email": "rhuanteste@gmail.com",
+      "password": "@Bc12345678",
+      "confirmPassword": "@Bc12345678"
     }
   ]
 }

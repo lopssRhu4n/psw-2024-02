@@ -37,7 +37,7 @@ const MainPage = () => {
                 delay={{ show: 100, hide: 100 }}
                 overlay={renderTooltip}
             >
-                <Button className="bg-primary position-fixed z-3 rounded-circle" onClick={() => setShowCreationForm(true)} style={{ width: '75px', height: '75px', right: '3%', bottom: '6.5rem' }}>
+                <Button className="bg-primary border-white position-fixed z-3 rounded-circle" onClick={() => setShowCreationForm(true)} style={{ width: '75px', height: '75px', right: '3%', bottom: '6.5rem' }}>
                     <i className="bi bi-plus" width="32" height="32"></i>
                     {showCreationForm}
                 </Button>
