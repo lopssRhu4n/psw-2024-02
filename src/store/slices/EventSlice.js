@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
+import { http } from "../../http/client";
 
 const eventsAdapter = createEntityAdapter();
 
@@ -11,7 +12,7 @@ const initialState = eventsAdapter.getInitialState(
 );
 
 export const fetchEventList = createAsyncThunk('event/fetchEventList', async () => {
-    const response = await (await fetch('http://localhost:3004/events')).json();
+    const response = await http('/events');
     return response;
 }
     , {
@@ -24,29 +25,17 @@ export const fetchEventList = createAsyncThunk('event/fetchEventList', async () 
     });
 
 export const addNewEvent = createAsyncThunk('event/addNewEvent', async (newEvent) => {
-    const response = await (await fetch('http://localhost:3004/events', {
-        method: 'POST',
-        body: JSON.stringify(newEvent),
-    })).json();
-
-    // thunkApi.dispatch(fetchEventList());
+    const response = await http('/events', { method: 'POST', body: newEvent });
     return response;
 });
 
 export const updateEvent = createAsyncThunk('event/updateEvent', async (eventData) => {
-    const response = await (await fetch('http://localhost:3004/events/' + eventData.id, {
-        method: 'PUT',
-        body: JSON.stringify(eventData),
-    })).json();
-
+    const response = await http('/events/' + eventData.id, { method: 'PUT', body: eventData });
     return response;
 })
 
 export const deleteEvent = createAsyncThunk('event/deleteEvent', async (id) => {
-    const response = await (await fetch('http://localhost:3004/events/' + id, {
-        method: 'DELETE',
-    })).json();
-
+    const response = await http('/events/' + id, { method: 'DELETE' });
     return response;
 })
 

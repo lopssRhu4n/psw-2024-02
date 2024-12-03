@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
+import { http } from "../../http/client";
 
 const authAdapter = createEntityAdapter();
 
@@ -13,7 +14,7 @@ const initialState = authAdapter.getInitialState(
 );
 
 export const fetchUsersList = createAsyncThunk('auth/fetchUsers', async () => {
-  const response = await (await fetch('http://localhost:3004/users')).json();
+  const response = await http('/users');
   return response;
 },
   {
@@ -25,11 +26,7 @@ export const fetchUsersList = createAsyncThunk('auth/fetchUsers', async () => {
 );
 
 export const registerNewUser = createAsyncThunk('auth/registerNewUser', async (newUser) => {
-  const response = await (await fetch('http://localhost:3004/users', {
-    method: 'POST',
-    body: JSON.stringify(newUser)
-  })).json();
-
+  const response = await http('/users', { method: 'POST', body: newUser });
   return response;
 })
 
