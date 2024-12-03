@@ -7,6 +7,7 @@ import '../styles/EventPage.css'
 import { useState } from "react";
 import { EventForm } from "../components/EventForm";
 import { selectCurrentUser, selectIsAuthenticated } from "../store/slices/AuthSlice";
+import InviteForm from "../components/InviteForm";
 
 const EventPage = () => {
     const { id } = useParams();
@@ -14,6 +15,7 @@ const EventPage = () => {
     const navigate = useNavigate();
     const isAuthenticated = useSelector(selectIsAuthenticated);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
+    const [showInviteForm, setShowInviteForm] = useState(false);
 
     dispatch(fetchEventList());
 
@@ -34,6 +36,7 @@ const EventPage = () => {
 
     return <Container fluid="md" >
         {showFormUpdate ? <EventForm setShowForm={setShowFormUpdate} showForm={showFormUpdate} data={event} /> : ''}
+        {showInviteForm ? <InviteForm setShowForm={setShowInviteForm} /> : ''}
         <Card className="" style={{ height: '75vh' }}>
             <Card.Img
                 onError={({ currentTarget }) => {
@@ -67,7 +70,7 @@ const EventPage = () => {
                             ? (
                                 <div>
                                     <Button className="bg-primary border-white rounded-0 me-2" onClick={() => setShowFormUpdate(true)}>Editar</Button>
-                                    <Button className="bg-primary border-white rounded-0 ms-2" onClick={console.log('Criar Convites')}>Convidar</Button>
+                                    <Button className="bg-primary border-white rounded-0 ms-2" onClick={() => setShowInviteForm(true)}>Convidar</Button>
 
                                 </div>)
                             : (<Button className="bg-primary border-white rounded-0" onClick={() => navigate(isAuthenticated ? '/path_para_criar_convite_próprio' : '/auth/register')}>Participar</Button>)}

@@ -42,6 +42,8 @@ export const authSlice = createSlice({
       if (userMatched) {
         state.user = userMatched;
         state.authError = '';
+
+        localStorage.setItem('evente-se-auth', state.user.id + '|' + new Date().toISOString());
         return;
       }
 
@@ -81,7 +83,7 @@ export default authSlice.reducer;
 
 export const { userLoggedIn, userLoggedOut } = authSlice.actions;
 
-export const { selectAll: selectAllUsers } = authSlice.getSelectors((state) => state.user);
+export const { selectAll: selectAllUsers } = authAdapter.getSelectors((state) => state.auth);
 
 export const selectCurrentUser = (state) => state.auth.user;
 

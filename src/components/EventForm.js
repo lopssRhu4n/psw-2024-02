@@ -35,7 +35,6 @@ export const EventForm = (props) => {
                 <div style={{ width: 'auto' }} className="h2">Criar Evento</div>
                 <Button className="rounded-circle bg-body border-0" style={{ width: 'auto' }} onClick={() => props.setShowForm(false)}>
                     <i className="bi bi-x-lg" width="32" height="32"></i>
-                    {props.showForm}
                 </Button>
             </Row>
 
