@@ -81,28 +81,20 @@
       "password": "12345678"
     },
     {
-      "id": "8634",
-      "name": "Rhuan Lopes Silva",
-      "cpf": "111.111.111-11",
-      "email": "a@a.com",
-      "password": "Teste@123",
-      "confirmPassword": "Teste@123"
-    },
-    {
-      "id": "ad02",
-      "name": "rhuan lopes silva",
-      "cpf": "170.672.627-98",
-      "email": "rhuaa@rhuan.com",
-      "password": "12312345@Ee",
-      "confirmPassword": "12312345@Ee"
-    },
-    {
       "id": "b56d",
-      "name": "Rhuan Lopes Silva",
+      "name": "Usuário de Teste",
       "cpf": "170.672.627-98",
       "email": "rhuanteste@gmail.com",
       "password": "@Bc12345678",
       "confirmPassword": "@Bc12345678"
+    }
+  ],
+  "invites": [
+    {
+      "id": "60e3",
+      "user_id": "b56d",
+      "text": "Convite especial para o usuário de teste.",
+      "event_id": "1"
     }
   ]
 }

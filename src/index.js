@@ -9,24 +9,6 @@ import reportWebVitals from './reportWebVitals';
 import { store } from './store/index';
 import { Provider } from 'react-redux';
 
-// const authStorage = localStorage.getItem('evente-se-auth');
-// const [userId, date] = authStorage.split('|');
-// const dispatch = useDispatch();
-
-// if (userId) {
-//   const parsedDate = new Date(date);
-//   const nowDate = new Date();
-
-//   const dateDiff = nowDate.getTime() - parsedDate.getTime();
-//   const dayInMs = 24 * 60 * 60 * 1000;
-//   if (dateDiff <= dayInMs) {
-//     // console.log('A diferença é menor que um dia' + dateDiff)
-
-//   }
-// console.log(parsedDate)
-// }
-// console.log(authStorage)
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
