@@ -87,6 +87,14 @@
       "email": "rhuanteste@gmail.com",
       "password": "@Bc12345678",
       "confirmPassword": "@Bc12345678"
+    },
+    {
+      "id": "95d7",
+      "name": "William Place Veras",
+      "cpf": "222.999.888-66",
+      "email": "wpvmal@gmail.com",
+      "password": "@Teste123",
+      "confirmPassword": "@Teste123"
     }
   ],
   "invites": [

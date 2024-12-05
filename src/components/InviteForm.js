@@ -22,16 +22,14 @@ const InviteForm = (props) => {
     }, [userListFetchingStatus, dispatch]);
 
     const onSubmit = (invite) => {
+        invite.event_id = props.event_id;
         dispatch(addNewInvite(invite));
     };
 
     return (
         <Form
             className="border rounded-1 position-fixed z-3 top-50 start-50 translate-middle bg-body py-4 px-3"
-            onSubmit={() => {
-                console.log('aqui')
-                handleSubmit(onSubmit)
-            }}
+            onSubmit={handleSubmit(onSubmit)}
         >
             <Row className="d-flex my-3 px-2 justify-content-between">
                 <div style={{ width: 'auto' }} className="h2">Convidar para Evento</div>
@@ -43,12 +41,15 @@ const InviteForm = (props) => {
 
             <div className="w-75 mx-auto">
                 {/* <Row className="my-3"> */}
-                <Form.Select bsPrefix="" className="mb-3" >
-                    <option>Selecione o convidado</option>
-                    {userList.map((val) => {
-                        return (<option value={val.id} key={val.id + '-option'}>{val.name}</option>)
-                    })}
-                </Form.Select>
+                <Form.Group className="mb-3">
+                    <Form.Select {...register('user_id')} bsPrefix="" className="" >
+                        <option value="">Selecione o convidado</option>
+                        {userList.map((val) => {
+                            return (<option value={val.id} key={val.id + '-option'}>{val.name}</option>)
+                        })}
+                    </Form.Select>
+                    <span className="error-span">{errors.user_id?.message}</span>
+                </Form.Group>
                 {/* </Row> */}
 
                 {/* <Row className="my-3"> */}
