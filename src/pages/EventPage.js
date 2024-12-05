@@ -35,8 +35,8 @@ const EventPage = () => {
 
 
     return <Container fluid="md" >
-        {showFormUpdate ? <EventForm setShowForm={setShowFormUpdate} showForm={showFormUpdate} data={event} /> : ''}
-        {showInviteForm ? <InviteForm setShowForm={setShowInviteForm} /> : ''}
+        {showFormUpdate && <EventForm setShowForm={setShowFormUpdate} showForm={showFormUpdate} data={event} />}
+        {showInviteForm && <InviteForm setShowForm={setShowInviteForm} event_id={event.id} />}
         <Card className="" style={{ height: '75vh' }}>
             <Card.Img
                 onError={({ currentTarget }) => {
