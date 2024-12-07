@@ -1,23 +1,35 @@
-import { Button, Card, Container, Image } from "react-bootstrap";
+import { Button, Card, Container, Dropdown, Image } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import PlaceholderImage from "../assets/placeholder.jpeg";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteEvent, fetchEventList, selectEventById } from "../store/slices/EventSlice";
 import '../styles/EventPage.css'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EventForm } from "../components/EventForm";
-import { selectCurrentUser, selectIsAuthenticated } from "../store/slices/AuthSlice";
+import { fetchUsersList, selectAllUsers, selectCurrentUser, selectIsAuthenticated } from "../store/slices/AuthSlice";
 import InviteForm from "../components/InviteForm";
+import { deleteInvite, fetchEventInvites, selectEventInvites, selectInvitesStatus } from "../store/slices/InviteSlice";
 
 const EventPage = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const isAuthenticated = useSelector(selectIsAuthenticated);
+    const eventInvites = useSelector(selectEventInvites);
+    const userList = useSelector(selectAllUsers)
+    const inviteStatus = useSelector(selectInvitesStatus);
+    // const event
     const [showFormUpdate, setShowFormUpdate] = useState(false);
     const [showInviteForm, setShowInviteForm] = useState(false);
+    const [invite, setInvite] = useState({});
+    // const [showFormUpdateInvite]
 
     dispatch(fetchEventList());
+
+    useEffect(() => {
+        dispatch(fetchEventInvites(id));
+    }, [dispatch, id, inviteStatus])
+    dispatch(fetchUsersList());
 
 
     const currentUser = useSelector(selectCurrentUser);
@@ -32,11 +44,15 @@ const EventPage = () => {
         navigate('/');
     }
 
+    const handleDeleteInvite = (id) => {
+        dispatch(deleteInvite(id));
+    }
+
 
 
     return <Container fluid="md" >
         {showFormUpdate && <EventForm setShowForm={setShowFormUpdate} showForm={showFormUpdate} data={event} />}
-        {showInviteForm && <InviteForm setShowForm={setShowInviteForm} event_id={event.id} />}
+        {showInviteForm && <InviteForm setShowForm={setShowInviteForm} event_id={event.id} data={invite} />}
         <Card className="" style={{ height: '75vh' }}>
             <Card.Img
                 onError={({ currentTarget }) => {
@@ -63,21 +79,55 @@ const EventPage = () => {
             </Card.ImgOverlay>
             <Card.Body className="h-100 d-flex flex-column justify-content-between">
 
-                <Card.Text className="mt-2">{event?.description}</Card.Text>
+                <div >
+                    <Card.Text className="mt-2">{event?.description}</Card.Text>
+                    <Dropdown>
+                        <Dropdown.Toggle>Visualizar Participantes</Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                            {eventInvites.map((val) => {
+                                const user = userList.find((user) => user.id === val.user_id);
+                                if (user) {
+                                    return <Dropdown.Item key={'dropdown-item' + val.id} bsPrefix="my-dropdown-item" disabled={!isUserEvent} className="d-flex align-items-center my-dropdown-item px-2">
+
+                                        <p className="m-0">{user.name}</p>
+
+                                        {isUserEvent &&
+                                            <>
+                                                <Button className="bg-transparent border-0" onClick={() => {
+                                                    setInvite(val)
+                                                    setShowInviteForm(true)
+
+                                                }}><i className="bi bi-pencil" ></i></Button>
+                                                <Button className="bg-transparent border-0"><i className="bi bi-trash" onClick={() => handleDeleteInvite(val.id)}></i></Button>
+                                            </>}
+                                    </Dropdown.Item >
+                                }
+                                return ''
+                            }
+                            )}
+
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </div>
+
                 <div>
                     {
                         isUserEvent
                             ? (
                                 <div>
                                     <Button className="bg-primary border-white rounded-0 me-2" onClick={() => setShowFormUpdate(true)}>Editar</Button>
-                                    <Button className="bg-primary border-white rounded-0 ms-2" onClick={() => setShowInviteForm(true)}>Convidar</Button>
+                                    <Button className="bg-primary border-white rounded-0 ms-2" onClick={() => {
+                                        setInvite({})
+                                        setShowInviteForm(true)
+                                    }}>Convidar</Button>
 
                                 </div>)
                             : (<Button className="bg-primary border-white rounded-0" onClick={() => navigate(isAuthenticated ? '/path_para_criar_convite_próprio' : '/auth/register')}>Participar</Button>)}
                 </div>
             </Card.Body>
         </Card>
-    </Container>
+    </Container >
 
 
 }

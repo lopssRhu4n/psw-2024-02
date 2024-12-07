@@ -1,11 +1,14 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
 import { http } from "../../http/client";
+import { retrieveUserFromLocalStorage } from "../../utils/utils";
+
+let initialUser = retrieveUserFromLocalStorage();
 
 const authAdapter = createEntityAdapter();
 
 const initialState = authAdapter.getInitialState(
   {
-    user: {},
+    user: initialUser,
     authError: '',
     status: 'idle',
     creationStatus: 'idle',
@@ -43,7 +46,7 @@ export const authSlice = createSlice({
         state.user = userMatched;
         state.authError = '';
 
-        localStorage.setItem('evente-se-auth', state.user.id + '|' + new Date().toISOString());
+        localStorage.setItem('evente-se-auth', JSON.stringify(state.user) + '|' + new Date().toISOString());
         return;
       }
 
@@ -52,7 +55,8 @@ export const authSlice = createSlice({
     },
 
     userLoggedOut: (state, action) => {
-      state.user = {}
+      state.user = {};
+      localStorage.removeItem('evente-se-auth');
     }
   },
   extraReducers: (builder) => {
