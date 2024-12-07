@@ -22,6 +22,23 @@
     scale: 1.05;
 }
 
+.my-dropdown-item {
+    text-decoration: none;
+    color: var(--bs-body-color);
+}
+
+/* .my-dropdown-item-button:hover {
+    background-color: var(--bs-body-color);
+} */
+
+/* .my-dropdown-item:hover {
+    background-color: var(--bs-body-bg);
+} */
+
+.delete {
+    color: var(--bs-form-invalid-color);
+}
+
 @media (min-width: 440px) {
     .icon-overlay {
         width: 90px;

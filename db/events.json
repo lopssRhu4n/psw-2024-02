@@ -99,9 +99,21 @@
   ],
   "invites": [
     {
-      "id": "60e3",
+      "id": "64d7",
       "user_id": "b56d",
-      "text": "Convite especial para o usuário de teste.",
+      "text": "Segundo convite pro usuário de teste",
+      "event_id": "1"
+    },
+    {
+      "id": "e2d2",
+      "user_id": "c893",
+      "text": "Convite para eu mesmo",
+      "event_id": "1"
+    },
+    {
+      "id": "b991",
+      "user_id": "c893",
+      "text": "Segundo convite para eu mesmo",
       "event_id": "1"
     }
   ]
