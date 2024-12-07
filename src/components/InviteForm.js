@@ -15,6 +15,7 @@ const InviteForm = (props) => {
 
     const { handleSubmit, register, formState: { errors } } = useForm({
         resolver: yupResolver(inviteSchema),
+        defaultValues: props.data
     })
 
     useEffect(() => {
@@ -24,6 +25,7 @@ const InviteForm = (props) => {
     const onSubmit = (invite) => {
         invite.event_id = props.event_id;
         dispatch(addNewInvite(invite));
+        props.setShowForm(false);
     };
 
     return (
@@ -32,7 +34,7 @@ const InviteForm = (props) => {
             onSubmit={handleSubmit(onSubmit)}
         >
             <Row className="d-flex my-3 px-2 justify-content-between">
-                <div style={{ width: 'auto' }} className="h2">Convidar para Evento</div>
+                <div style={{ width: 'auto' }} className="h2">{props.data ? 'Editar Convite' : 'Convidar para Evento'}</div>
                 <Button className="rounded-circle bg-body border-0" style={{ width: 'auto' }} onClick={() => props.setShowForm(false)}>
                     <i className="bi bi-x-lg" width="32" height="32"></i>
                     {props.showForm}

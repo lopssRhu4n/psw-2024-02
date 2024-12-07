@@ -7,7 +7,8 @@ const initialState = inviteAdapter.getInitialState(
     {
         status: 'idle',
         error: null,
-        userInvites: []
+        userInvites: [],
+        eventInvites: []
     }
 );
 
@@ -16,9 +17,26 @@ export const addNewInvite = createAsyncThunk('invite/addNewInvite', async (newIn
     return response;
 });
 
+export const deleteInvite = createAsyncThunk('invite/deleteInvite', async (id) => {
+    const response = await http('/invites/' + id, { method: 'DELETE' });
+    return response;
+})
+
 export const fetchUserInvites = 'Todo';
 
-export const fetchEventInvites = 'Todo';
+export const fetchEventInvites = createAsyncThunk('invite/fetchEventInvites', async (eventId) => {
+    const response = await http('/invites?event_id=' + eventId, { method: 'GET' });
+    return response;
+}
+    , {
+        condition(arg, thunkApi) {
+            const inviteStatus = selectInvitesStatus(thunkApi.getState());
+            console.log(inviteStatus)
+            if (inviteStatus !== 'idle') {
+                return false;
+            }
+        }
+    })
 
 export const inviteSlice = createSlice({
     name: 'Invite',
@@ -27,10 +45,23 @@ export const inviteSlice = createSlice({
         builder.addCase(addNewInvite.pending, (state, action) => {
             state.status = 'pending';
         }).addCase(addNewInvite.fulfilled, (state, action) => {
-            state.status = 'completed';
+            state.status = 'idle';
             state.userInvites.push(action.payload);
         }).addCase(addNewInvite.rejected, (state, action) => {
             state.status = 'failed';
+        }).addCase(fetchEventInvites.pending, (state, action) => {
+            state.status = 'pending';
+        }).addCase(fetchEventInvites.fulfilled, (state, action) => {
+            state.eventInvites = action.payload;
+            state.status = 'completed';
+            // state.status = 'idle';
+        }).addCase(deleteInvite.pending, (state, action) => {
+            state.status = 'pending';
+        }).addCase(deleteInvite.fulfilled, (state, action) => {
+            state.eventInvites = state.eventInvites.filter((val) => val.id !== action.payload.id);
+            state.status = 'idle';
+        }).addCase(deleteInvite.rejected, (state, action) => {
+            state.status = 'failed'
         });
     }
 
@@ -43,3 +74,5 @@ export const selectInvitesStatus = (state) => state.invite.status;
 export const selectInvitesError = (state) => state.invite.error;
 
 export const selectUserInvites = (state) => state.invite.userInvites;
+
+export const selectEventInvites = (state) => state.invite.eventInvites;
