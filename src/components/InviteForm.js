@@ -1,15 +1,15 @@
 import { Form, Row, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsersList, selectAllUsers, selectCurrentAuthStatus } from "../store/slices/AuthSlice";
+import { fetchUsersList, selectAvailableUsersForEvent, selectCurrentAuthStatus } from "../store/slices/AuthSlice";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { inviteSchema } from "../validation/InviteSchema";
-import { addNewInvite } from "../store/slices/InviteSlice";
+import { addNewInvite, updateInvite } from "../store/slices/InviteSlice";
 
 const InviteForm = (props) => {
 
-    const userList = useSelector(selectAllUsers);
+    const userList = useSelector((state) => selectAvailableUsersForEvent(state, props.eventOwner));
     const dispatch = useDispatch();
     const userListFetchingStatus = useSelector(selectCurrentAuthStatus);
 
@@ -18,13 +18,20 @@ const InviteForm = (props) => {
         defaultValues: props.data
     })
 
+
     useEffect(() => {
         dispatch(fetchUsersList());
     }, [userListFetchingStatus, dispatch]);
 
     const onSubmit = (invite) => {
-        invite.event_id = props.event_id;
-        dispatch(addNewInvite(invite));
+        if (Object.values(props.data).length) {
+            dispatch(updateInvite(invite))
+        } else {
+            invite.eventId = props.event_id;
+            invite.status = 'pending';
+            dispatch(addNewInvite(invite));
+        }
+
         props.setShowForm(false);
     };
 
