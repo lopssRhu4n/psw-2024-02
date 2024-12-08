@@ -98,3 +98,8 @@ export const selectCurrentAuthStatus = (state) => state.auth.status;
 export const selectUsersStatus = (state) => state.user.status;
 
 export const selectAuthError = (state) => state.auth.authError;
+
+export const selectAvailableUsersForEvent = (state, ownerId) => {
+  const users = Object.values(state.auth.entities);
+  return users.filter(val => val.id !== ownerId);
+}
