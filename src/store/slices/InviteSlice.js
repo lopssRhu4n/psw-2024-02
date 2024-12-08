@@ -22,21 +22,31 @@ export const deleteInvite = createAsyncThunk('invite/deleteInvite', async (id) =
     return response;
 })
 
+export const updateInvite = createAsyncThunk('invite/updateInvite', async (invite) => {
+    const response = await http('/invites/' + invite.id, { method: 'PUT', body: invite });
+    return response;
+});
+
+export const fetchAllInvites = createAsyncThunk('invite/fetchAllInvites', async () => {
+    const response = await http('/invites?_embed=event', { method: 'GET' });
+    return response;
+}, {
+    condition(arg, thunkApi) {
+        const inviteStatus = selectInvitesStatus(thunkApi.getState());
+        if (inviteStatus !== 'idle') {
+            return false;
+        }
+    }
+});
+
+
 export const fetchUserInvites = 'Todo';
 
-export const fetchEventInvites = createAsyncThunk('invite/fetchEventInvites', async (eventId) => {
-    const response = await http('/invites?event_id=' + eventId, { method: 'GET' });
-    return response;
-}
-    , {
-        condition(arg, thunkApi) {
-            const inviteStatus = selectInvitesStatus(thunkApi.getState());
-            console.log(inviteStatus)
-            if (inviteStatus !== 'idle') {
-                return false;
-            }
-        }
-    })
+// export const fetchAllEvents = createAsyncThunk('invite/fetchEventInvites', async (eventId) => {
+//     const response = await http('/invites?event_id=' + eventId, { method: 'GET' });
+//     return response;
+// }
+
 
 export const inviteSlice = createSlice({
     name: 'Invite',
@@ -46,22 +56,32 @@ export const inviteSlice = createSlice({
             state.status = 'pending';
         }).addCase(addNewInvite.fulfilled, (state, action) => {
             state.status = 'idle';
-            state.userInvites.push(action.payload);
+            // state.userInvites.push(action.payload);
+            inviteAdapter.addOne(state, action.payload);
         }).addCase(addNewInvite.rejected, (state, action) => {
             state.status = 'failed';
-        }).addCase(fetchEventInvites.pending, (state, action) => {
+        }).addCase(fetchAllInvites.pending, (state, action) => {
             state.status = 'pending';
-        }).addCase(fetchEventInvites.fulfilled, (state, action) => {
-            state.eventInvites = action.payload;
+        }).addCase(fetchAllInvites.fulfilled, (state, action) => {
+            // state.eventInvites = action.payload;
+            inviteAdapter.setAll(state, action.payload);
             state.status = 'completed';
             // state.status = 'idle';
         }).addCase(deleteInvite.pending, (state, action) => {
             state.status = 'pending';
         }).addCase(deleteInvite.fulfilled, (state, action) => {
-            state.eventInvites = state.eventInvites.filter((val) => val.id !== action.payload.id);
+            // state.eventInvites = state.eventInvites.filter((val) => val.id !== action.payload.id);
+            inviteAdapter.removeOne(state, action.payload);
             state.status = 'idle';
         }).addCase(deleteInvite.rejected, (state, action) => {
             state.status = 'failed'
+        }).addCase(updateInvite.pending, (state, action) => {
+            state.status = 'pending';
+        }).addCase(updateInvite.fulfilled, (state, action) => {
+            inviteAdapter.setOne(state, action.payload);
+            state.status = 'idle';
+        }).addCase(updateInvite.rejected, (state, action) => {
+            state.status = 'failed';
         });
     }
 
@@ -69,10 +89,20 @@ export const inviteSlice = createSlice({
 
 export default inviteSlice.reducer;
 
+export const { selectAll: selectAllInvites } = inviteAdapter.getSelectors((state) => state.invite)
+
 export const selectInvitesStatus = (state) => state.invite.status;
 
 export const selectInvitesError = (state) => state.invite.error;
 
-export const selectUserInvites = (state) => state.invite.userInvites;
+export const selectUserInvites = (state, user_id) => {
+    const invites = Object.values(state.invite.entities);
 
-export const selectEventInvites = (state) => state.invite.eventInvites;
+    return invites.filter((val) => val.user_id === user_id);
+}
+
+export const selectEventInvites = (state, event_id) => {
+    const entities = Object.values(state.invite.entities);
+    return entities.filter((val) => val.event_id === event_id);
+};
+
