@@ -84,3 +84,32 @@ export const { selectAll: selectAllEvents, selectById: selectEventById, selectId
 export const selectEventsStatus = (state) => state.event.status;
 
 export const selectEventsError = (state) => state.event.error;
+
+export const selectUserEvents = (state, user_id) => {
+    const entities = Object.values(state.event.entities);
+    return entities.filter((val) => val.user_id === user_id);
+}
+
+export const selectUserOldInvitedEvents = (state, invitedEventsIds) => {
+    const events = Object.values(state.event.entities);
+
+    const invitedEvents = events.filter((val) => invitedEventsIds.includes(val.id))
+
+    const oldInvitedEvents = invitedEvents.filter((val) => {
+
+        const { date, end_time } = val;
+        console.log(date.slice(0, 10), end_time)
+        const combinedString = `${date.slice(0, 10)}T${end_time}:00`;
+        const dateFormated = new Date(combinedString);
+        const nowDate = new Date();
+
+        const dateDiff = dateFormated.getTime() - nowDate.getTime();
+
+        return dateDiff < 0;
+    })
+
+    console.log(invitedEvents)
+
+    return oldInvitedEvents;
+
+}
