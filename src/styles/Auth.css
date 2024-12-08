@@ -34,18 +34,6 @@
     color: var(--bs-body-color);
 }
 
-/* .my-form-control input[type=file]::-webkit-file-upload-button {
-    display: none;
-}
-
-.my-form-control[type=file]::after {
-    content: '';
-}
-
-.my-form-control input[type=file]::file-selector-button {
-    display: none;
-} */
-
 .form-input-checkbox {
     position: absolute;
     top: 8%;
@@ -69,7 +57,7 @@
 
 .error-span {
     color: var(--bs-form-invalid-color);
-    height: 20px;
+    min-height: 20px;
     width: 100%;
     display: block;
 }
