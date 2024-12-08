@@ -8,14 +8,14 @@ import { useEffect, useState } from "react";
 import { EventForm } from "../components/EventForm";
 import { fetchUsersList, selectAllUsers, selectCurrentUser, selectIsAuthenticated } from "../store/slices/AuthSlice";
 import InviteForm from "../components/InviteForm";
-import { deleteInvite, fetchEventInvites, selectEventInvites, selectInvitesStatus } from "../store/slices/InviteSlice";
+import { deleteInvite, fetchAllInvites, selectEventInvites, selectInvitesStatus } from "../store/slices/InviteSlice";
 
 const EventPage = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const isAuthenticated = useSelector(selectIsAuthenticated);
-    const eventInvites = useSelector(selectEventInvites);
+    const eventInvites = useSelector((state) => selectEventInvites(state, id));
     const userList = useSelector(selectAllUsers)
     const inviteStatus = useSelector(selectInvitesStatus);
     // const event
@@ -27,7 +27,7 @@ const EventPage = () => {
     dispatch(fetchEventList());
 
     useEffect(() => {
-        dispatch(fetchEventInvites(id));
+        dispatch(fetchAllInvites());
     }, [dispatch, id, inviteStatus])
     dispatch(fetchUsersList());
 
@@ -52,7 +52,7 @@ const EventPage = () => {
 
     return <Container fluid="md" >
         {showFormUpdate && <EventForm setShowForm={setShowFormUpdate} showForm={showFormUpdate} data={event} />}
-        {showInviteForm && <InviteForm setShowForm={setShowInviteForm} event_id={event.id} data={invite} />}
+        {showInviteForm && <InviteForm setShowForm={setShowInviteForm} event_id={event.id} data={invite} eventOwner={event.user_id} />}
         <Card className="" style={{ height: '75vh' }}>
             <Card.Img
                 onError={({ currentTarget }) => {
@@ -81,8 +81,13 @@ const EventPage = () => {
 
                 <div >
                     <Card.Text className="mt-2">{event?.description}</Card.Text>
-                    <Dropdown>
-                        <Dropdown.Toggle>Visualizar Participantes</Dropdown.Toggle>
+                    <Dropdown className="d-flex justify-content-end">
+                        <Dropdown.Toggle className="bg-body border-primary">
+                            {/* Participantes: {eventInvites.length + '/' + event.capacity} */}
+                            <i className="bi bi-people-fill me-3"></i>
+                            {eventInvites.length + '/' + event?.capacity}
+
+                        </Dropdown.Toggle>
 
                         <Dropdown.Menu>
                             {eventInvites.map((val) => {
