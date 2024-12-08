@@ -69,6 +69,20 @@
       "title": "Teste usuário 2",
       "used_capacity": 0,
       "user_id": "b56d"
+    },
+    {
+      "id": "3124",
+      "img": "[object FileList]",
+      "capacity": 37,
+      "end_time": "17:19",
+      "start_time": "16:19",
+      "date": "2024-12-06T03:00:00.000Z",
+      "price": 3,
+      "location": "Rio de janeiro",
+      "description": "Evento de teste com novo usuário.",
+      "title": "Teste usuario novo",
+      "used_capacity": 0,
+      "user_id": "0fa6"
     }
   ],
   "users": [
@@ -95,26 +109,30 @@
       "email": "wpvmal@gmail.com",
       "password": "@Teste123",
       "confirmPassword": "@Teste123"
+    },
+    {
+      "id": "0fa6",
+      "name": "Usuário Novo Teste",
+      "cpf": "170.672.627-98",
+      "email": "usuario@gmail.com",
+      "password": "12345678@Bc",
+      "confirmPassword": "12345678@Bc"
     }
   ],
   "invites": [
     {
       "id": "64d7",
       "user_id": "b56d",
-      "text": "Segundo convite pro usuário de teste",
-      "event_id": "1"
+      "text": "Segundo convite pro usuário de teste editado",
+      "eventId": "1",
+      "status": "pending"
     },
     {
-      "id": "e2d2",
+      "id": "07bb",
       "user_id": "c893",
-      "text": "Convite para eu mesmo",
-      "event_id": "1"
-    },
-    {
-      "id": "b991",
-      "user_id": "c893",
-      "text": "Segundo convite para eu mesmo",
-      "event_id": "1"
+      "text": "Convite para Rhuan",
+      "eventId": "3124",
+      "status": "pending"
     }
   ]
 }
