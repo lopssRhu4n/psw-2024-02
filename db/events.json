@@ -128,11 +128,19 @@
       "status": "pending"
     },
     {
+      "id": "74d9",
+      "user_id": "c893",
+      "text": "Segundo convite pro usuário de teste editado",
+      "eventId": "1",
+      "status": "denied"
+    },
+    {
       "id": "07bb",
       "user_id": "c893",
       "text": "Convite para Rhuan",
       "eventId": "3124",
-      "status": "pending"
+      "status": "confirmed"
     }
-  ]
+  ],
+  "feedbacks": []
 }
