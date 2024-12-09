@@ -1,10 +1,15 @@
-import { Button, Card, Container, Form, Row } from "react-bootstrap";
+import { Button, Card, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllInvites, selectUserInvites } from "../store/slices/InviteSlice";
 import { fetchEventList, selectUserEvents, selectUserOldInvitedEvents } from "../store/slices/EventSlice";
 import { selectCurrentUser, selectIsAuthenticated } from "../store/slices/AuthSlice";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import FeedbackForm from "../components/FeedbackForm";
+import PlaceholderImage from "../assets/placeholder.jpeg";
+import { EventCard } from "../components/EventCard";
+import { fetchAllFeedbacks, selectUserFeedbacks } from "../store/slices/FeedbackSlice";
+import "../styles/ProfilePage.css";
+import InviteCard from "../components/InviteCard";
 
 const ProfilePage = (props) => {
 
@@ -16,60 +21,64 @@ const ProfilePage = (props) => {
     }
 
     const dispatch = useDispatch();
+
     dispatch(fetchAllInvites());
     dispatch(fetchEventList());
+    dispatch(fetchAllFeedbacks())
 
     const user = useSelector(selectCurrentUser);
     const userInvites = useSelector((state) => selectUserInvites(state, user.id));
     const userEvents = useSelector((state) => selectUserEvents(state, user.id));
-    const [showFeedbackForm, setShowFeedbackForm] = useState(false);
+    const userFeedbacks = useSelector((state) => selectUserFeedbacks(state, user.id));
 
 
-    const invitesId = userInvites.map((val) => val.eventId);
+    const invitesId = userInvites.filter((invite) => invite.status === 'confirmed').map((val) => val.eventId);
 
     const userOldInvitedEvents = useSelector((state) => selectUserOldInvitedEvents(state, invitesId));
 
 
     return (<Container>
-        Página de perfil aqui
-
-
-        {showFeedbackForm && <Form className="bg-black position-absolute top-50 start-50 translate-middle z-3 w-50 h-75">
-            <Row className="d-flex my-3 px-2 justify-content-between">
-                <div style={{ width: 'auto' }} className="h2">Deixar Feedback</div>
-                <Button className="rounded-circle bg-body border-0" style={{ width: 'auto' }} onClick={() => setShowFeedbackForm(false)}>
-                    <i className="bi bi-x-lg" width="32" height="32"></i>
-                </Button>
-            </Row>
-
-
-        </Form>}
 
         <div className="my-5">
             <h1>Seus Eventos</h1>
-            <div className="d-flex justify-content-center">
+            <div className="d-flex  mx-auto scroll-container-horizontal py-5  overflow-x-scroll" >
+                {userEvents.map((val, index) =>
 
-                {userEvents.map(val => <Card key={'event-' + val.id} onClick={() => navigate('/event/' + val.id)}> {val.title}</Card>)}
+                    <div className="card-container-horizontal mx-5 col-sm-6 col-lg-4" style={{ minWidth: '350px' }} key={'event-card-' + index}>
+                        <EventCard val={val} />
+                    </div>
+                )}
             </div>
 
         </div>
 
         <div className="my-5">
             <h1>Seus convites</h1>
-            <div className="d-flex justify-content-center">
-                {userInvites.map(val =>
-                    <Card key={'invite-' + val.id}>
-                        <h2>{val.event.title}</h2>
+            <div className=" scroll-container-horizontal d-flex overflow-x-scroll py-5 justify-content-center">
+                {userInvites.map(val => <InviteCard val={val} key={'invite-card-' + val.id} />)}
+                {/* {userInvites.map(val =>
+                    <Card className="card-container-horizontal py-4 px-2 mx-5" style={{ minWidth: '300px', maxWidth: '300px' }} key={'invite-' + val.id}>
+                        <Card.Header>
+                            <h2>{val.event.title}</h2>
+                        </Card.Header>
+
+                        <Card.Body>
+                            {val.status === 'pending' && <div>
+                                <p className="text-caption">Confirmar presença:</p>
+
+                                <div className="d-flex justify-content-around">
+                                    <Button className="bg-transparent rounded-5" style={{ borderColor: 'green', color: 'green' }}><i className="bi bi-check"></i></Button>
+                                    <Button className="bg-transparent rounded-5" style={{ borderColor: 'var(--bs-form-invalid-color)', color: 'var(--bs-form-invalid-color)' }}><i className="bi bi-x"></i></Button>
+                                </div>
+                            </div>}
+
+                            {val.status === 'confirmed' && <h4 className="text-center" >Presença confirmada!</h4>}
+
+                        </Card.Body>
 
 
-                        {val.status === 'pending' && <div>
-                            Confirmar presença:
-                            <Button className="bg-transparent rounded-5 border-white"><i className="bi bi-check"></i></Button>
-                            <Button className="bg-transparent rounded-5 border-white"><i className="bi bi-x"></i></Button>
-
-                        </div>}
                     </Card>
-                )}
+                )} */}
 
             </div>
         </div>
@@ -77,25 +86,35 @@ const ProfilePage = (props) => {
         <div className="my-5">
             <h1>Eventos Passados</h1>
             <div className="d-flex justify-content-center">
-                {userOldInvitedEvents.map(val =>
-                    <Card>
-                        <Card.Header>
-                            <Card.Text>{val.title}</Card.Text>
-                            <Form className="my-3">
-                                <h3>Feedback</h3>
-                                <Form.Group controlId="feedback-form-text">
-                                    <Form.Label>Texto</Form.Label>
-                                    <Form.Control />
-                                </Form.Group>
-                            </Form>
-                            <Button onClick={() => setShowFeedbackForm(true)}>Seu Feedback</Button>
-                        </Card.Header>
+                {userOldInvitedEvents.map((event) => {
+
+                    const eventFeedback = userFeedbacks.find((feedback) => feedback.eventId === event.id);
+
+                    return <Card key={'card-event-feedback-' + event.id} style={{ width: '300px' }}>
+                        <Card.Img
+                            onError={({ currentTarget }) => {
+                                currentTarget.onerror = null; // prevents looping
+                                currentTarget.src = PlaceholderImage;
+                            }}
+                            variant="top"
+                            src={event?.img ? event?.img : PlaceholderImage}
+                            height={200}
+                        />
+                        <Card.ImgOverlay style={{ height: '200px' }}>
+                            <Card.Text className="bg-dark text-white h5 p-2">{event.title}</Card.Text>
+                        </Card.ImgOverlay>
+                        <Card.Body>
+
+                            <FeedbackForm eventId={event.id} data={eventFeedback} />
+                        </Card.Body>
+
                     </Card>
 
+                }
                 )}
             </div>
         </div>
-    </Container>);
+    </Container >);
 }
 
 export default ProfilePage;
