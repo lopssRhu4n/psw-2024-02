@@ -26,8 +26,8 @@ const MainLayout = (props) => {
                 <Nav.Link as={NavLink} to="/"> Evente-se</Nav.Link>
             </Navbar.Brand>
             <Nav className="justify-content-around justify-content-sm-start align-items-center  h-100">
-                <Nav.Link as={NavLink} to="/notifications" className="text-center  d-sm-flex justify-content-center align-items-center   pa-0" style={{ height: "60px" }}><i className="bi bi-bell h4 mb-none mx-4" style={{ marginBottom: 0 }}></i>
-                </Nav.Link>
+                {/* <Nav.Link as={NavLink} to="/notifications" className="text-center  d-sm-flex justify-content-center align-items-center   pa-0" style={{ height: "60px" }}><i className="bi bi-bell h4 mb-none mx-4" style={{ marginBottom: 0 }}></i>
+                </Nav.Link> */}
                 <Nav.Link as={NavLink} to={Object.keys(user).length ? '/profile' : '/auth/register'} className="pa-0 " style={{ height: "60px" }} >
                     <Image
                         onError={({ currentTarget }) => {

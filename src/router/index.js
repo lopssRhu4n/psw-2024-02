@@ -29,14 +29,14 @@ const router = createHashRouter([
                 path: '/event/:id',
                 element: <EventPage />
             },
-            {
-                path: '/feedback',
-                element: <FeedbackPage />
-            },
-            {
-                path: '/invite',
-                element: <InvitePage />
-            },
+            // {
+            //     path: '/feedback',
+            //     element: <FeedbackPage />
+            // },
+            // {
+            //     path: '/invite',
+            //     element: <InvitePage />
+            // },
             {
                 path: '/profile',
                 element: <ProfilePage />

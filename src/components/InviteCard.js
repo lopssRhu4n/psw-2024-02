@@ -1,11 +1,15 @@
 
 import { Button, Card, } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateInvite } from "../store/slices/InviteSlice";
+import { fetchUsersList, selectUserById } from "../store/slices/AuthSlice";
 
 const InviteCard = (props) => {
 
     const dispatch = useDispatch();
+    dispatch(fetchUsersList());
+
+    const senderUser = useSelector((state) => selectUserById(state, props.val?.user_id));
 
     const handleButtonClick = (status) => {
         const data = { ...props.val }
@@ -22,6 +26,9 @@ const InviteCard = (props) => {
     return (<Card className="card-container-horizontal py-4 px-2 mx-5" style={{ minWidth: '300px', maxWidth: '300px' }} key={'invite-' + props.val.id}>
         <Card.Header>
             <h2>{props.val.event?.title}</h2>
+            <div>
+                <p>Evento de: {senderUser?.name}</p>
+            </div>
         </Card.Header>
 
         <Card.Body>

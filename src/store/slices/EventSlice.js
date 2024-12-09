@@ -1,5 +1,6 @@
-import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 import { http } from "../../http/client";
+import { calculateIfEventIsOver } from "../../utils/utils";
 
 const eventsAdapter = createEntityAdapter();
 
@@ -85,31 +86,14 @@ export const selectEventsStatus = (state) => state.event.status;
 
 export const selectEventsError = (state) => state.event.error;
 
-export const selectUserEvents = (state, user_id) => {
-    const entities = Object.values(state.event.entities);
-    return entities.filter((val) => val.user_id === user_id);
-}
+const selectId = (state, id) => id;
 
-export const selectUserOldInvitedEvents = (state, invitedEventsIds) => {
-    const events = Object.values(state.event.entities);
+const selectInvitedEventsIds = (state, invitedEventsIds) => invitedEventsIds;
 
+export const selectUserEvents = createSelector([selectAllEvents, selectId], (events, user_id) => events.filter((val) => val.user_id === user_id));
+
+export const selectUserOldInvitedEvents = createSelector([selectAllEvents, selectInvitedEventsIds], (events, invitedEventsIds) => {
     const invitedEvents = events.filter((val) => invitedEventsIds.includes(val.id))
-
-    const oldInvitedEvents = invitedEvents.filter((val) => {
-
-        const { date, end_time } = val;
-        // console.log(date.slice(0, 10), end_time)
-        const combinedString = `${date.slice(0, 10)}T${end_time}:00`;
-        const dateFormated = new Date(combinedString);
-        const nowDate = new Date();
-
-        const dateDiff = dateFormated.getTime() - nowDate.getTime();
-
-        return dateDiff < 0;
-    })
-
-    // console.log(invitedEvents)
-
+    const oldInvitedEvents = invitedEvents.filter((val) => calculateIfEventIsOver(val))
     return oldInvitedEvents;
-
-}
+});

@@ -9,7 +9,12 @@ import { selectIsAuthenticated } from "../store/slices/AuthSlice";
 
 
 const MainPage = () => {
-    const eventList = useSelector(selectAllEvents);
+    const events = useSelector(selectAllEvents);
+
+    const [nameFilter, setNameFilter] = useState('');
+
+    const eventList = events.filter((event) => event.title.toLowerCase().includes(nameFilter.toLowerCase()));
+    // console.log(eventList)
     const dispatch = useDispatch();
     const eventListFetchingStatus = useSelector(selectEventsStatus);
     const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -49,11 +54,22 @@ const MainPage = () => {
     }
 
     return (<div fluid className="mx-auto  main-container  mb-5  gx-4 gy-5 row justify-content-center" style={{ width: '90%' }} >
+
+        <div className="col-12  p-2 d-flex justify-content-center align-items-center">
+            <div className="input-group justify-content-center w-50 mx-auto">
+                <input className=" my-form-control" placeholder="Buscar Evento" defaultValue={nameFilter} onChange={(e) => setNameFilter(e.target.value)} id="search" />
+                <label htmlFor="search" className="position-absolute" style={{ right: 30, top: 5 }}>
+                    <i className="bi bi-search"></i>
+                </label>
+            </div>
+        </div>
+
         {
-            eventList.map((val, index) =>
-                <div className="main-card-container col-sm-6 col-lg-4" style={{ minWidth: '350px' }} key={'event-card-' + index}>
-                    <EventCard val={val} />
-                </div>)
+            eventList.length ?
+                eventList.map((val, index) =>
+                    <div className="main-card-container col-sm-6 col-lg-4" style={{ minWidth: '350px' }} key={'event-card-' + index}>
+                        <EventCard val={val} />
+                    </div>) : <h4>Não há eventos.</h4>
         }
 
         {

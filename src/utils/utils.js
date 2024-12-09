@@ -23,3 +23,19 @@ export const retrieveUserFromLocalStorage = () => {
 
     return initialUser;
 }
+
+export const calculateIfEventIsOver = (event) => {
+    if (event?.date && event?.end_time) {
+        const { date, end_time } = event;
+        // console.log(date.slice(0, 10), end_time)
+        const combinedString = `${date.slice(0, 10)}T${end_time}:00`;
+        const dateFormated = new Date(combinedString);
+        const nowDate = new Date();
+
+        const dateDiff = dateFormated.getTime() - nowDate.getTime();
+
+        return dateDiff < 0;
+
+    }
+
+}

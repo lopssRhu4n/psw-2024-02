@@ -82,8 +82,6 @@ const InviteForm = (props) => {
                 </div>
 
                 {/* </Row> */}
-
-
             </div>
 
         </Form>

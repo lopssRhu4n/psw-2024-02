@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 import { http } from "../../http/client";
 import { retrieveUserFromLocalStorage } from "../../utils/utils";
 
@@ -73,6 +73,7 @@ export const authSlice = createSlice({
     }).addCase(registerNewUser.fulfilled, (state, action) => {
       authAdapter.addOne(state, action.payload);
       state.user = action.payload;
+      localStorage.setItem('evente-se-auth', JSON.stringify(state.user) + '|' + new Date().toISOString());
       state.creationStatus = 'completed';
     }).addCase(registerNewUser.rejected, (state, action) => {
       state.status = 'failed';
@@ -87,7 +88,7 @@ export default authSlice.reducer;
 
 export const { userLoggedIn, userLoggedOut } = authSlice.actions;
 
-export const { selectAll: selectAllUsers } = authAdapter.getSelectors((state) => state.auth);
+export const { selectAll: selectAllUsers, selectById: selectUserById } = authAdapter.getSelectors((state) => state.auth);
 
 export const selectCurrentUser = (state) => state.auth.user;
 
@@ -99,7 +100,8 @@ export const selectUsersStatus = (state) => state.user.status;
 
 export const selectAuthError = (state) => state.auth.authError;
 
-export const selectAvailableUsersForEvent = (state, ownerId) => {
-  const users = Object.values(state.auth.entities);
+const selectId = (state, id) => id;
+
+export const selectAvailableUsersForEvent = createSelector([selectAllUsers, selectId], (users, ownerId) => {
   return users.filter(val => val.id !== ownerId);
-}
+});

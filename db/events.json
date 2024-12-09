@@ -83,6 +83,20 @@
       "title": "Teste usuario novo",
       "used_capacity": 0,
       "user_id": "0fa6"
+    },
+    {
+      "id": "40c3",
+      "img": "[object FileList]",
+      "capacity": 20,
+      "end_time": "20:08",
+      "start_time": "00:00",
+      "date": "2024-12-25T03:00:00.000Z",
+      "price": 20,
+      "location": "Polo Norte",
+      "description": "Natal mágico apenas para os mais próximos.",
+      "title": "Natal mágico",
+      "used_capacity": 0,
+      "user_id": "c893"
     }
   ],
   "users": [
@@ -117,6 +131,14 @@
       "email": "usuario@gmail.com",
       "password": "12345678@Bc",
       "confirmPassword": "12345678@Bc"
+    },
+    {
+      "id": "3694",
+      "name": "Registro novo teste persistencia",
+      "cpf": "111.111.111-22",
+      "email": "teste@gmail.com",
+      "password": "@Bc12345678",
+      "confirmPassword": "@Bc12345678"
     }
   ],
   "invites": [
@@ -128,19 +150,27 @@
       "status": "pending"
     },
     {
-      "id": "74d9",
-      "user_id": "c893",
-      "text": "Segundo convite pro usuário de teste editado",
-      "eventId": "1",
-      "status": "denied"
-    },
-    {
       "id": "07bb",
       "user_id": "c893",
       "text": "Convite para Rhuan",
       "eventId": "3124",
       "status": "confirmed"
+    },
+    {
+      "id": "a9b8",
+      "eventId": "40c3",
+      "user_id": "3694",
+      "text": "",
+      "status": "confirmed"
     }
   ],
-  "feedbacks": []
+  "feedbacks": [
+    {
+      "text": "Grandíssimo Evento! Ótimas memórias e saudades.",
+      "rating": 4,
+      "id": "8e28",
+      "eventId": "3124",
+      "userId": "c893"
+    }
+  ]
 }

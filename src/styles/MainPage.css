@@ -106,6 +106,38 @@
     }
 }
 
+.my-form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: none;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.my-form-control:focus {
+    box-shadow: none;
+    border-color: var(--bs-primary);
+    outline: none;
+    color: white;
+}
+
+.my-form-control::-webkit-input-placeholder {
+    color: var(--bs-tertiary-color);
+    transition: color .15s ease-in-out;
+}
+
+.my-form-control:focus::-webkit-input-placeholder {
+    color: var(--bs-body-color);
+}
+
 /* @keyframes blur-effect {
     from {
         filter: blur(20px);

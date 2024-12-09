@@ -1,4 +1,4 @@
-import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit";
 import { http } from "../../http/client";
 
 const inviteAdapter = createEntityAdapter();
@@ -95,14 +95,17 @@ export const selectInvitesStatus = (state) => state.invite.status;
 
 export const selectInvitesError = (state) => state.invite.error;
 
-export const selectUserInvites = (state, user_id) => {
-    const invites = Object.values(state.invite.entities);
+const selectId = (state, id) => id;
 
+export const selectUserInvites = createSelector([selectAllInvites, selectId], (invites, user_id) => {
     return invites.filter((val) => val.user_id === user_id);
-}
+})
 
-export const selectEventInvites = (state, event_id) => {
-    const entities = Object.values(state.invite.entities);
-    return entities.filter((val) => val.event_id === event_id);
-};
+export const selectEventInvites = createSelector([selectAllInvites, selectId], (invites, event_id) => {
+    return invites.filter((val) => val.eventId === event_id);
+});
 
+// (state, event_id) => {
+//     const entities = Object.values(state.invite.entities);
+//     return entities.filter((val) => val.envetId === event_id);
+// };

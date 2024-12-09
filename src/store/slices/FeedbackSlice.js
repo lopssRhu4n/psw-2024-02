@@ -1,4 +1,4 @@
-import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit";
 import { http } from "../../http/client";
 
 export const addNewFeedback = createAsyncThunk('feedback/addNewFeedback', async (feedback) => {
@@ -82,12 +82,12 @@ export const feedbackSlice = createSlice({
 
 export default feedbackSlice.reducer;
 
-export const { selectAll: selectAllFeedbacks } = feedbackAdapter.getSelectors();
+export const { selectAll: selectAllFeedbacks } = feedbackAdapter.getSelectors((state) => state.feedback);
 
 export const selectFeedbackStatus = (state) => state.feedback.status;
 
-export const selectUserFeedbacks = (state, userId) => {
-    const feedbacks = Object.values(state.feedback.entities);
-    return feedbacks.filter((feedback) => feedback.userId === userId);
+const selectId = (state, id) => id;
 
-}
+export const selectUserFeedbacks = createSelector([selectAllFeedbacks, selectId], (feedbacks, userId) => feedbacks.filter((feedback) => feedback.userId === userId));
+
+export const selectEventFeedbacks = createSelector([selectAllFeedbacks, selectId], (feedbacks, eventId) => feedbacks.filter((feedback) => feedback.eventId === eventId));
