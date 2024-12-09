@@ -98,7 +98,7 @@ export const selectUserOldInvitedEvents = (state, invitedEventsIds) => {
     const oldInvitedEvents = invitedEvents.filter((val) => {
 
         const { date, end_time } = val;
-        console.log(date.slice(0, 10), end_time)
+        // console.log(date.slice(0, 10), end_time)
         const combinedString = `${date.slice(0, 10)}T${end_time}:00`;
         const dateFormated = new Date(combinedString);
         const nowDate = new Date();
@@ -108,7 +108,7 @@ export const selectUserOldInvitedEvents = (state, invitedEventsIds) => {
         return dateDiff < 0;
     })
 
-    console.log(invitedEvents)
+    // console.log(invitedEvents)
 
     return oldInvitedEvents;
 
