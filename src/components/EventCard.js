@@ -3,6 +3,7 @@ import PlaceholderImage from "../assets/placeholder.jpeg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllInvites, selectEventInvites } from "../store/slices/InviteSlice";
+import '../styles/components/EventCard.css';
 
 export const EventCard = (props) => {
     const navigate = useNavigate()
@@ -18,8 +19,8 @@ export const EventCard = (props) => {
 
     return (
         <Card className="main-card h-100" onClick={handleClick}>
-            <Card.Header className="p-0">
-                <Card.Img
+            <Card.Header className="p-0 m-0">
+                <Card.Img className="card-img"
 
                     onError={({ currentTarget }) => {
                         currentTarget.onerror = null; // prevents looping
@@ -35,21 +36,21 @@ export const EventCard = (props) => {
                 </Card.Text> */}
                 <Row className="mb-4 mt-auto">
                     <Card.Text className="col-6 m-0 text-start d-flex align-items-center">
-                        <i className="bi bi-geo-alt-fill me-3"></i>
+                        <i className="bi bi-geo-alt-fill me-1 event-card-icon"></i>
                         {props.val.location}
                     </Card.Text>
                     <Card.Text className="col-6 m-0 text-end d-flex align-items-center justify-content-end">
-                        <i className="bi bi-coin me-3"></i>
+                        <i className="bi bi-coin me-1 event-card-icon"></i>
                         R$ {props.val.price}
                     </Card.Text>
                 </Row>
                 <Row>
                     <Card.Text className="col-6 m-0 text-start d-flex align-items-center">
-                        <i className="bi bi-calendar-date-fill me-3"></i>
+                        <i className="bi bi-calendar-date-fill me-1 event-card-icon"></i>
                         {props.val.date.slice(0, 10)}
                     </Card.Text>
                     <Card.Text className="col-6 m-0 text-end d-flex align-items-center justify-content-end">
-                        <i className="bi bi-people-fill me-3"></i>
+                        <i className="bi bi-people-fill me-1 event-card-icon"></i>
                         {userQuantity + '/' + props.val.capacity}
                     </Card.Text>
                 </Row>

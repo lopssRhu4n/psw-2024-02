@@ -57,8 +57,8 @@ const MainPage = () => {
                 delay={{ show: 100, hide: 100 }}
                 overlay={renderTooltip}
             >
-                <Button className="bg-primary border-white position-fixed z-3 rounded-circle" onClick={() => setShowCreationForm(true)} style={{ width: '75px', height: '75px', right: '3%', bottom: '6.5rem' }}>
-                    <i className="bi bi-plus" width="32" height="32"></i>
+                <Button className="creation-form-button" onClick={() => setShowCreationForm(true)} style={{ width: '75px', height: '75px', right: '3%', bottom: '6.5rem' }}>
+                    <i className="bi bi-plus" style={{ fontSize: '6rem', color: 'var(--bs-body-bg)' }}></i>
                     {showCreationForm}
                 </Button>
             </OverlayTrigger>
@@ -68,13 +68,13 @@ const MainPage = () => {
 
     }
 
-    return (<div fluid className="mx-auto  main-container  mb-5  gx-4 gy-5 row justify-content-center" style={{ width: '90%' }} >
+    return (<div fluid className="mx-auto    gx-4 gy-5 row justify-content-center" style={{ size: '100%'}}>
 
         <div className="col-12 p-2">
-            <h2 className="d-flex align-items-center">Melhor Avaliados <i className="bi bi-star-fill ms-2" style={{ color: 'yellow' }}></i></h2>
+            <h2 className="px-4 d-flex align-items-center">Melhores Avaliados <i className="bi bi-star-fill ms-2" style={{ color: 'yellow' }}></i></h2>
             <div className="scroll-container-horizontal py-4 overflow-x-scroll d-flex" >
                 {bestRated.map((val) =>
-                    <div className="mx-5 card-container-horizontal" style={{ minWidth: '350px' }} key={'best-rated-card-' + val.id}>
+                    <div className="mx-5 main-card" style={{ minWidth: '350px'}} key={'best-rated-card-' + val.id}>
                         <EventCard val={val} />
                     </div>
 
@@ -83,24 +83,31 @@ const MainPage = () => {
             </div>
         </div>
 
-        <div className="col-12"><h2>Todos os eventos</h2></div>
+        <div className="px-4 col-12"><h2>Todos os eventos</h2></div>
 
         <div className="col-12  p-2 d-flex justify-content-center align-items-center">
             <div className="input-group justify-content-center w-50 mx-auto">
                 <input className=" my-form-control" placeholder="Buscar Evento" defaultValue={nameFilter} onChange={(e) => setNameFilter(e.target.value)} id="search" />
-                <label htmlFor="search" className="position-absolute" style={{ right: 30, top: 5 }}>
+                <label htmlFor="search" className="position-absolute" style={{ right: '30px', top: '50%', transform: 'translateY(-75%)', fontSize: '2rem'}}>
                     <i className="bi bi-search"></i>
                 </label>
             </div>
         </div>
 
-        {
-            eventList.length ?
-                eventList.map((val, index) =>
-                    <div className="main-card-container col-sm-6 col-lg-4" style={{ minWidth: '350px' }} key={'event-card-' + index}>
-                        <EventCard val={val} />
-                    </div>) : <h4>Não há eventos.</h4>
-        }
+        <div className="row">
+        {eventList.length ? (
+          eventList.map((val, index) => (
+            <div className="col-lg-4 col-md-6 col-12 mb-4" key={"event-card-" + index}>
+                    <div className="main-card mx-auto" style={{ maxWidth: "350px", maxHeight: "350px" }}>      
+                            <EventCard val={val} />
+                        </div>
+                    </div>
+                ))
+            ) : (
+                <h4 className="text-center">Não há eventos.</h4>
+            )}
+        </div>
+
 
         {
             formRendering()

@@ -1,0 +1,50 @@
+.main-card {
+    border: none !important;
+    border-radius: 25px !important;
+    overflow: hidden;
+    box-shadow: 0 0px 10px #11111B;
+    transition: transform 0.1s ease, box-shadow 0.3s ease;
+}
+
+.main-card:hover {
+    transform: scale(1.02); 
+    box-shadow: 0 0px 20px #11111B;
+}
+
+.main-card .card-header {
+    padding: 0;
+    margin: 0;
+}
+
+.main-card .card-img {
+    height: 180px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.main-card .card-body {
+    background-color: var(--bs-body-bg); 
+    color: var(--bs-body-color); 
+}
+
+.main-card .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.event-card-icon {
+    color: var(--bs-lavender); 
+}
+
+.card-text {
+    font-size: 0.875rem;
+}
+
+.card-text i {
+    margin-right: 4px;
+}
+
+
+.card-img {
+    border-radius: 0 !important;
+}

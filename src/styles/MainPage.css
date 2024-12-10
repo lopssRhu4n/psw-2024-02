@@ -11,84 +11,25 @@
 
 }
 
-.main-card {
-    position: relative;
-    transition: scale .5s;
-    animation: autoShow both;
-    animation-timeline: view(90% 10%);
-}
-
 .scroll-container {
     /* scroll-snap-type: y proximity; */
     scroll-behavior: smooth;
 }
 
-.main-card-container {
-    scroll-snap-align: center;
-    position: relative;
-    animation: avoidHover both;
-    animation-timeline: view(100% 70%);
-}
+*::-webkit-scrollbar {
+    height: 15px;
+    width: 15px;
+  }
 
-/* @keyframes autoShow {
-    from {
-        opacity: 0;
-        transform: translatex(100px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translatex(0);
-    }
-} */
-
-/* @keyframes avoidHover {
-    from {
-        pointer-events: none;
-    }
-
-    to {
-        pointer-events: all;
-    }
-} */
-
-.main-card-container::after
-
-/* .main-card::before  */
-    {
-    --angle: 0deg;
-    content: '';
-    position: absolute;
-    top: -1px;
-    bottom: -1px;
-    right: 11px;
-    left: 11px;
-    border-radius: var(--bs-border-radius);
-    animation: autoShow both;
-    z-index: -3;
-}
-
-/* .main-card::before {
-    z-index: -2;
-    filter: blur(20px);
-    opacity: .7;
-} */
-
-.main-card:hover {
-    border-color: transparent;
-    scale: 1.05;
-}
-
-.main-card-container:has(> .main-card:hover)::after {
-    transition: scale .5s;
-    scale: 1.05;
-    animation: glowing-border 3.5s linear infinite;
-    background: conic-gradient(from var(--angle), transparent, var(--bs-border-color-translucent), transparent, var(--bs-border-color-translucent));
-}
-
-/* .main-card:hover::before {
-    animation: blur-effect 3.5s linear infinite;
-} */
+  *::-webkit-scrollbar-thumb {
+    border-radius: 30px;
+    background-color: var(--bs-blue);
+  }
+  
+  *::-webkit-scrollbar-thumb:hover *::-webkit-scrollbar-thumb:active {
+    background-color: var(--bs-lavender);
+  }
+  
 
 @property --angle {
     syntax: "<angle>";
@@ -107,36 +48,42 @@
 }
 
 .my-form-control {
-    display: block;
-    width: 100%;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
     color: var(--bs-body-color);
-    appearance: none;
-    background-color: var(--bs-body-bg);
-    background-clip: padding-box;
-    border: var(--bs-border-width) solid var(--bs-border-color);
-    border-radius: none;
-    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-}
-
-.my-form-control:focus {
-    box-shadow: none;
-    border-color: var(--bs-primary);
+    font-weight: bold !important;
+    border-radius: 100px !important;
+    background-color: var(--bs-tertiary-bg) !important;
+    height: 4rem;
+    font-size: 1.2rem !important; 
+    padding-left: 2rem !important; 
+    border: none !important;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 5px var(--bs-primary);
+ }
+ 
+ .my-form-control:focus {
+    box-shadow: 0px 0px 15px var(--bs-primary);
+    scale: 1.02;
     outline: none;
-    color: white;
-}
-
-.my-form-control::-webkit-input-placeholder {
-    color: var(--bs-tertiary-color);
-    transition: color .15s ease-in-out;
-}
-
-.my-form-control:focus::-webkit-input-placeholder {
-    color: var(--bs-body-color);
-}
+    color: var(--bs-primary);
+ }
+ 
+ .my-form-control::-webkit-input-placeholder {
+     color: var(--bs-tertiary-color);
+     transition: color .15s ease-in-out;
+ }
+ 
+ .my-form-control:focus::-webkit-input-placeholder {
+     color: var(--bs-body-color);
+ }
+ 
+ .my-form-control-icon {
+     position: absolute;
+     left: 0.75rem; 
+     display: flex;
+     align-items: center;
+     color: var(--bs-tertiary-color);
+ }
+ 
 
 /* @keyframes blur-effect {
     from {
@@ -147,3 +94,19 @@
         filter: blur(19px);
     }
 } */
+
+.creation-form-button {
+    border-radius: 100px !important;
+    position: fixed !important;
+    z-index: 3 !important;
+    display: flex !important; 
+    align-items: center !important;
+    justify-content: center!important ;
+    width: '75px' !important;
+    height: '75px' !important;
+    right: '3%' !important;
+    bottom: '6.5rem' !important;
+    background-color: var(--bs-primary)!important;
+    border: none !important;
+    box-shadow: 0 0px 10px #11111B;
+}
