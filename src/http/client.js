@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3004';
+const baseUrl = process.env.API_URL ?? 'http://localhost:3004';
 
 
 export const http = async (endpoint, customConfig) => {
