@@ -1,16 +1,18 @@
 import { Card, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllInvites, selectUserInvites } from "../store/slices/InviteSlice";
-import { fetchEventList, selectUserEvents, selectUserOldInvitedEvents } from "../store/slices/EventSlice";
-import { selectCurrentUser, selectIsAuthenticated } from "../store/slices/AuthSlice";
+import { fetchAllInvites, selectInvitesStatus, selectUserInvites } from "../store/slices/InviteSlice";
+import { fetchEventList, selectEventsStatus, selectUserEvents, selectUserOldInvitedEvents } from "../store/slices/EventSlice";
+import { selectCurrentAuthStatus, selectCurrentUser, selectIsAuthenticated } from "../store/slices/AuthSlice";
 import { useNavigate } from "react-router-dom";
 import FeedbackForm from "../components/FeedbackForm";
 import PlaceholderImage from "../assets/placeholder.jpeg";
 import { EventCard } from "../components/EventCard";
-import { fetchAllFeedbacks, selectUserFeedbacks } from "../store/slices/FeedbackSlice";
+import { fetchAllFeedbacks, selectFeedbackStatus, selectUserFeedbacks } from "../store/slices/FeedbackSlice";
 import "../styles/ProfilePage.css";
 import InviteCard from "../components/InviteCard";
 import { calculateIfEventIsOver } from "../utils/utils";
+import { useEffect } from "react";
+import { setLoading } from "../store/slices/GlobalSlice";
 
 const ProfilePage = (props) => {
 
@@ -31,6 +33,21 @@ const ProfilePage = (props) => {
     const userInvites = useSelector((state) => selectUserInvites(state, user.id));
     const userEvents = useSelector((state) => selectUserEvents(state, user.id));
     const userFeedbacks = useSelector((state) => selectUserFeedbacks(state, user.id));
+
+    const authStatus = useSelector(selectCurrentAuthStatus);
+    const inviteStatus = useSelector(selectInvitesStatus);
+    const feedbackStatus = useSelector(selectFeedbackStatus);
+    const eventsStatus = useSelector(selectEventsStatus);
+
+    useEffect(() => {
+        if (eventsStatus === 'pending' || feedbackStatus === 'pending' || authStatus === 'pending' || inviteStatus === 'pending') {
+            dispatch(setLoading(true));
+        } else {
+            dispatch(setLoading(false));
+        }
+    })
+
+
 
     const notOverInvites = userInvites.filter(val => !calculateIfEventIsOver(val.event));
 

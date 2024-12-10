@@ -2,15 +2,16 @@ import { Button, Card, Container, Dropdown, Image } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import PlaceholderImage from "../assets/placeholder.jpeg";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteEvent, fetchEventList, selectEventById } from "../store/slices/EventSlice";
+import { deleteEvent, fetchEventList, selectEventById, selectEventsStatus } from "../store/slices/EventSlice";
 import '../styles/EventPage.css'
 import { useEffect, useState } from "react";
 import { EventForm } from "../components/EventForm";
-import { fetchUsersList, selectAllUsers, selectCurrentUser, selectIsAuthenticated } from "../store/slices/AuthSlice";
+import { fetchUsersList, selectAllUsers, selectCurrentAuthStatus, selectCurrentUser, selectIsAuthenticated } from "../store/slices/AuthSlice";
 import InviteForm from "../components/InviteForm";
 import { addNewInvite, deleteInvite, fetchAllInvites, selectEventInvites, selectInvitesStatus } from "../store/slices/InviteSlice";
 import { calculateIfEventIsOver } from "../utils/utils";
-import { fetchAllFeedbacks, selectEventFeedbacks } from "../store/slices/FeedbackSlice";
+import { fetchAllFeedbacks, selectEventFeedbacks, selectFeedbackStatus } from "../store/slices/FeedbackSlice";
+import { setLoading } from "../store/slices/GlobalSlice";
 
 const EventPage = () => {
     const { id } = useParams();
@@ -20,17 +21,28 @@ const EventPage = () => {
     const eventInvites = useSelector((state) => selectEventInvites(state, id));
     const userList = useSelector(selectAllUsers)
     const inviteStatus = useSelector(selectInvitesStatus);
+    const eventStatus = useSelector(selectEventsStatus);
+    const feedbackStatus = useSelector(selectFeedbackStatus);
+    const authStatus = useSelector(selectCurrentAuthStatus);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
     const [showInviteForm, setShowInviteForm] = useState(false);
     const [invite, setInvite] = useState({});
 
     dispatch(fetchEventList());
     dispatch(fetchAllFeedbacks());
+    dispatch(fetchUsersList());
 
     useEffect(() => {
         dispatch(fetchAllInvites());
     }, [dispatch, id, inviteStatus])
-    dispatch(fetchUsersList());
+
+    useEffect(() => {
+        if (eventStatus === 'pending' || feedbackStatus === 'pending' || authStatus === 'pending' || inviteStatus === 'pending') {
+            dispatch(setLoading(true));
+        } else {
+            dispatch(setLoading(false));
+        }
+    })
 
 
     const currentUser = useSelector(selectCurrentUser);
@@ -43,8 +55,6 @@ const EventPage = () => {
 
     const isUserEvent = currentUser?.id === event?.user_id;
     const isUserParticipating = eventInvites.findIndex(invite => invite.user_id === currentUser?.id) !== -1;
-    console.log(isUserParticipating)
-
 
     const handleDelete = () => {
         dispatch(deleteEvent(event.id));
@@ -96,7 +106,7 @@ const EventPage = () => {
     return <Container fluid="md" >
         {showFormUpdate && <EventForm setShowForm={setShowFormUpdate} showForm={showFormUpdate} data={event} />}
         {showInviteForm && <InviteForm setShowForm={setShowInviteForm} event_id={event.id} data={invite} eventOwner={event.user_id} />}
-        <Card className="" style={{ minHeight: '75vh' }}>
+        <Card className="mb-3" style={{ minHeight: '75vh' }}>
             <Card.Img
                 onError={({ currentTarget }) => {
                     currentTarget.onerror = null; // prevents looping
@@ -165,7 +175,7 @@ const EventPage = () => {
 
                 <div className="mt-2">
                     <h5>Feedbacks:</h5>
-                    {eventFeedbacks.length ? <div className="overflow-x-scroll p-3">
+                    {eventFeedbacks.length ? <div className="overflow-x-scroll p-3 d-flex" style={{ gap: 20 }}>
                         {eventFeedbacks.map((feedback) => {
                             return <Card className="" style={{ width: '200px' }}>
                                 <Card.Header className="h6">{feedback.userId}</Card.Header>

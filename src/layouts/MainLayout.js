@@ -5,10 +5,12 @@ import { Outlet, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser, userLoggedOut } from "../store/slices/AuthSlice";
 import defaultProfilePlaceholder from "../assets/defaultProfilePlaceholder.jpg";
+import { selectIsLoading } from "../store/slices/GlobalSlice";
 // import { Container } from "react-bootstrap";
 
 const MainLayout = (props) => {
 
+    const isLoading = useSelector(selectIsLoading);
     const dispatch = useDispatch();
     const user = useSelector(selectCurrentUser);
 
@@ -21,6 +23,18 @@ const MainLayout = (props) => {
     }
 
     return (<div className="scroll-container max-vw-100 vh-100 overflow-y-auto position-relative">
+
+
+        {
+            isLoading &&
+            <div className="loading-container h1 position-absolute vh-100 vw-100 d-flex justify-content-center align-items-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        }
+
+
         <Navbar className="px-3 px-md-5 d-flex justify-content-between bar sticky-bottom  mb-5  z-1 ">
             <Navbar.Brand>
                 <Nav.Link as={NavLink} to="/"> Evente-se</Nav.Link>

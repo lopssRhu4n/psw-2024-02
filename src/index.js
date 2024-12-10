@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import './styles/Variables.css';
+import './styles/App.css';
 import reportWebVitals from './reportWebVitals';
 import { store } from './store/index';
 import { Provider } from 'react-redux';

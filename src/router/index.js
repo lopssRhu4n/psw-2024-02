@@ -2,8 +2,6 @@ import { createHashRouter } from "react-router-dom"
 import ErrorPage from '../pages/ErrorPage';
 import MainPage from '../pages/MainPage';
 import EventPage from "../pages/EventPage";
-import FeedbackPage from "../pages/FeedbackPage";
-import InvitePage from "../pages/InvitePage";
 import MainLayout from "../layouts/MainLayout";
 import AuthLayout from "../layouts/AuthLayout";
 import LoginPage from "../pages/LoginPage";

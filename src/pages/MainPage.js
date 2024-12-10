@@ -4,8 +4,10 @@ import { EventForm } from '../components/EventForm'
 import { useEffect, useState } from "react";
 import '../styles/MainPage.css'
 import { useDispatch, useSelector } from "react-redux";
-import { fetchEventList, selectAllEvents, selectEventsStatus } from "../store/slices/EventSlice";
+import { fetchEventList, selectAllEvents, selectBestRatedEvents, selectEventsStatus } from "../store/slices/EventSlice";
 import { selectIsAuthenticated } from "../store/slices/AuthSlice";
+import { fetchAllFeedbacks, selectFeedbackStatus } from "../store/slices/FeedbackSlice";
+import { setLoading } from "../store/slices/GlobalSlice";
 
 
 const MainPage = () => {
@@ -18,10 +20,23 @@ const MainPage = () => {
     const dispatch = useDispatch();
     const eventListFetchingStatus = useSelector(selectEventsStatus);
     const isAuthenticated = useSelector(selectIsAuthenticated);
+    const bestRated = useSelector(selectBestRatedEvents);
+    const eventsStatus = useSelector(selectEventsStatus);
+    const feedbackStatus = useSelector(selectFeedbackStatus);
 
     useEffect(() => {
         dispatch(fetchEventList());
     }, [eventListFetchingStatus, dispatch]);
+
+    useEffect(() => {
+        if (eventsStatus === 'pending' || feedbackStatus === 'pending') {
+            dispatch(setLoading(true));
+        } else {
+            dispatch(setLoading(false))
+        }
+    })
+
+    dispatch(fetchAllFeedbacks());
 
 
     const [showCreationForm, setShowCreationForm] = useState(false);
@@ -54,6 +69,21 @@ const MainPage = () => {
     }
 
     return (<div fluid className="mx-auto  main-container  mb-5  gx-4 gy-5 row justify-content-center" style={{ width: '90%' }} >
+
+        <div className="col-12 p-2">
+            <h2 className="d-flex align-items-center">Melhor Avaliados <i className="bi bi-star-fill ms-2" style={{ color: 'yellow' }}></i></h2>
+            <div className="scroll-container-horizontal py-4 overflow-x-scroll d-flex" >
+                {bestRated.map((val) =>
+                    <div className="mx-5 card-container-horizontal" style={{ minWidth: '350px' }} key={'best-rated-card-' + val.id}>
+                        <EventCard val={val} />
+                    </div>
+
+                )}
+
+            </div>
+        </div>
+
+        <div className="col-12"><h2>Todos os eventos</h2></div>
 
         <div className="col-12  p-2 d-flex justify-content-center align-items-center">
             <div className="input-group justify-content-center w-50 mx-auto">

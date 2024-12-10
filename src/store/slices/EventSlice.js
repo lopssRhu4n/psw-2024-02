@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 import { http } from "../../http/client";
 import { calculateIfEventIsOver } from "../../utils/utils";
+import { selectAllFeedbacks } from "./FeedbackSlice";
 
 const eventsAdapter = createEntityAdapter();
 
@@ -96,4 +97,29 @@ export const selectUserOldInvitedEvents = createSelector([selectAllEvents, selec
     const invitedEvents = events.filter((val) => invitedEventsIds.includes(val.id))
     const oldInvitedEvents = invitedEvents.filter((val) => calculateIfEventIsOver(val))
     return oldInvitedEvents;
+});
+
+export const selectBestRatedEvents = createSelector([selectAllEvents, selectAllFeedbacks], (events, feedbacks) => {
+    if (feedbacks.length) {
+        const ratingMap = feedbacks.reduce((acc, feedback) => {
+            if (!acc[feedback.eventId]) {
+                acc[feedback.eventId] = { totalRating: 0, count: 0 };
+            }
+            acc[feedback.eventId].totalRating += feedback.rating;
+            acc[feedback.eventId].count += 1;
+            return acc;
+        }, {});
+
+        const eventRatings = events.map(event => {
+            const ratings = ratingMap[event.id] || { totalRating: 0, count: 0 };
+            const averageRating = ratings.count > 0 ? ratings.totalRating / ratings.count : 0;
+            return { ...event, averageRating };
+        });
+
+        const topTenEvents = eventRatings.sort((a, b) => b.averageRating - a.averageRating).slice(0, 10);
+        return topTenEvents;
+    }
+    return [];
+
+
 });

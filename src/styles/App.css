@@ -1,0 +1,13 @@
+.scroll-container-horizontal {
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+}
+
+.card-container-horizontal {
+    scroll-snap-align: center;
+}
+
+.loading-container {
+    background: rgba(100, 100, 100, 0.4);
+    z-index: 99;
+}
