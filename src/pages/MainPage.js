@@ -15,7 +15,7 @@ const MainPage = () => {
 
     const [nameFilter, setNameFilter] = useState('');
 
-    const eventList = events.filter((event) => event.title.toLowerCase().includes(nameFilter.toLowerCase()));
+    const eventList = events.filter((event) => event.title?.toLowerCase().includes(nameFilter.toLowerCase()));
     // console.log(eventList)
     const dispatch = useDispatch();
     const eventListFetchingStatus = useSelector(selectEventsStatus);
@@ -68,7 +68,7 @@ const MainPage = () => {
 
     }
 
-    return (<div fluid className="mx-auto    gx-4 gy-5 row justify-content-center" style={{ size: '100%'}}>
+    return (<div fluid className="mx-auto gx-4 gy-5 row justify-content-center" style={{ size: '100%'}}>
 
         <div className="col-12 p-2">
             <h2 className="px-4 d-flex align-items-center">Melhores Avaliados <i className="bi bi-star-fill ms-2" style={{ color: 'yellow' }}></i></h2>
@@ -83,11 +83,11 @@ const MainPage = () => {
             </div>
         </div>
 
-        <div className="px-4 col-12"><h2>Todos os eventos</h2></div>
+        <div className="text-center px-2 col-12 m-0"><h2>Todos os eventos</h2></div>
 
         <div className="col-12  p-2 d-flex justify-content-center align-items-center">
             <div className="input-group justify-content-center w-50 mx-auto">
-                <input className=" my-form-control" placeholder="Buscar Evento" defaultValue={nameFilter} onChange={(e) => setNameFilter(e.target.value)} id="search" />
+                <input className=" my-form-control search-bar" placeholder="Buscar Evento" defaultValue={nameFilter} onChange={(e) => setNameFilter(e.target.value)} id="search" />
                 <label htmlFor="search" className="position-absolute" style={{ right: '30px', top: '50%', transform: 'translateY(-75%)', fontSize: '2rem'}}>
                     <i className="bi bi-search"></i>
                 </label>

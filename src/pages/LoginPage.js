@@ -52,7 +52,11 @@ const LoginPage = () => {
                 <span className="error-span text-center">{error}</span>
 
                 <div className="my-4 d-flex justify-content-end">
-                    <Button className="bg-primary border-white rounded-0" type="submit">Entrar</Button>
+                    <Button className="bg-primary rounded-3" type="submit" style={{
+                        border: 'none',
+                        fontSize: '2rem',
+                        width: '100%'
+                    }}>Entrar</Button>
                 </div>
 
             </div>

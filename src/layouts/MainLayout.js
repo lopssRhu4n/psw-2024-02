@@ -37,7 +37,13 @@ const MainLayout = (props) => {
 
         <Navbar className="px-3 px-md-5 d-flex justify-content-between bar sticky-bottom  mb-5  z-1 ">
             <Navbar.Brand>
-                <Nav.Link as={NavLink} to="/"> Evente-se</Nav.Link>
+                <Nav.Link as={NavLink} to="/">
+                    <h1 style={{
+                        color: 'var(--bs-lavender)'
+                    }}>
+                        Evente-se
+                    </h1>
+                </Nav.Link>
             </Navbar.Brand>
             <Nav className="justify-content-around justify-content-sm-start align-items-center  h-100">
                 {/* <Nav.Link as={NavLink} to="/notifications" className="text-center  d-sm-flex justify-content-center align-items-center   pa-0" style={{ height: "60px" }}><i className="bi bi-bell h4 mb-none mx-4" style={{ marginBottom: 0 }}></i>
@@ -49,13 +55,26 @@ const MainLayout = (props) => {
                             currentTarget.src = defaultProfilePlaceholder;
                         }}
 
-                        src={user.profile_image ?? defaultProfilePlaceholder} style={{ width: '50px' }} className="bg-primary p-2 rounded-circle" rounded fluid />
+                        src={user.profile_image ?? defaultProfilePlaceholder} 
+                        style={{ 
+                            width: '50px',
+                            border: '5px solid var(--bs-lavender)'
+                            
+                        }} className="rounded-circle" rounded fluid />
                 </Nav.Link>
                 {
                     userExists ?
                         <Nav.Link as={NavLink}>
-                            <Button className="rounded-5 border-white bg-transparent" onClick={handleLogout} style={{ width: '50px', height: '50px' }}>
-                                <i className="bi bi-door-closed"></i>
+                            <Button className="rounded-5 bg-transparent" onClick={handleLogout} 
+                            style={{ 
+                                width: '50px', 
+                                height: '50px', 
+                                fontSize: '2rem',
+                                border: 'none',
+                                padding: '0',
+                                color: 'var(--bs-lavender)'
+                                }}>
+                                <i className="bi bi-box-arrow-right"></i>
                             </Button>
                         </Nav.Link>
                         : ''

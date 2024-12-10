@@ -1,0 +1,9 @@
+.event-form {
+    background-color: var(--bs-tertiary-bg);
+}
+
+.event-form .my-form-control {
+    border-radius: 10px;
+    border: none !important;
+    font-size: 1.5rem !important;
+}
