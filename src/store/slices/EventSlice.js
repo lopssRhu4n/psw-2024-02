@@ -3,7 +3,9 @@ import { http } from "../../http/client";
 import { calculateIfEventIsOver } from "../../utils/utils";
 import { selectAllFeedbacks } from "./FeedbackSlice";
 
-const eventsAdapter = createEntityAdapter();
+const eventsAdapter = createEntityAdapter({
+    selectId: (event) => event._id
+});
 
 const initialState = eventsAdapter.getInitialState(
     {
@@ -111,7 +113,7 @@ export const selectBestRatedEvents = createSelector([selectAllEvents, selectAllF
         }, {});
 
         const eventRatings = events.map(event => {
-            const ratings = ratingMap[event.id] || { totalRating: 0, count: 0 };
+            const ratings = ratingMap[event._id] || { totalRating: 0, count: 0 };
             const averageRating = ratings.count > 0 ? ratings.totalRating / ratings.count : 0;
             return { ...event, averageRating };
         });
@@ -119,7 +121,7 @@ export const selectBestRatedEvents = createSelector([selectAllEvents, selectAllF
         const topTenEvents = eventRatings.sort((a, b) => b.averageRating - a.averageRating).slice(0, 10);
         return topTenEvents;
     }
-    return [];
+    return events.slice(0, 10);
 
 
 });

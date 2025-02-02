@@ -84,7 +84,7 @@ const ProfilePage = (props) => {
 
                     const eventFeedback = userFeedbacks.find((feedback) => feedback.eventId === event.id);
 
-                    return <Card key={'card-event-feedback-' + event.id} style={{ width: '300px' }}>
+                    return <Card key={'card-event-feedback-' + event._id} style={{ width: '300px' }}>
                         <Card.Img
                             onError={({ currentTarget }) => {
                                 currentTarget.onerror = null; // prevents looping

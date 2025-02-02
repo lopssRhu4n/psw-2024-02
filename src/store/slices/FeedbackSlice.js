@@ -28,7 +28,7 @@ export const deleteFeedback = createAsyncThunk('feedback/deleteFeedback', async 
     return response;
 });
 
-const feedbackAdapter = createEntityAdapter();
+const feedbackAdapter = createEntityAdapter({ selectId: (feedback) => feedback._id });
 
 const initialState = feedbackAdapter.getInitialState({
     status: 'idle',

@@ -11,7 +11,7 @@ export const EventCard = (props) => {
     dispatch(fetchAllInvites());
 
     const handleClick = () => {
-        navigate("/event/" + props.val.id);
+        navigate("/event/" + props.val._id);
     }
 
     const userQuantity = useSelector((state) => selectEventInvites(state, props.val.id)).length;

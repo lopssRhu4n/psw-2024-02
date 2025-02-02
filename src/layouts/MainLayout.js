@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/Bar.css";
 import { Button, Image, Nav, Navbar } from "react-bootstrap"
 import { Outlet, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentUser, userLoggedOut } from "../store/slices/AuthSlice";
+import { selectAuthToken, selectCurrentUser, userLoggedOut, userRefresh } from "../store/slices/AuthSlice";
 import defaultProfilePlaceholder from "../assets/defaultProfilePlaceholder.jpg";
 import { selectIsLoading } from "../store/slices/GlobalSlice";
 // import { Container } from "react-bootstrap";
@@ -12,7 +12,12 @@ const MainLayout = (props) => {
 
     const isLoading = useSelector(selectIsLoading);
     const dispatch = useDispatch();
+    // const token = useSelector(selectAuthToken);
     const user = useSelector(selectCurrentUser);
+
+    // useEffect(() => {
+    //     if (token) dispatch(userRefresh());
+    // })
 
     const userExists = Object.keys(user).length;
 
@@ -28,8 +33,8 @@ const MainLayout = (props) => {
         {
             isLoading &&
             <div className="loading-container h1 position-absolute vh-100 vw-100 d-flex justify-content-center align-items-center">
-                <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading...</span>
+                <div className="spinner-border" role="status">
+                    <span className="visually-hidden">Loading...</span>
                 </div>
             </div>
         }

@@ -1,10 +1,14 @@
 import { createSlice, createAsyncThunk, createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 import { http } from "../../http/client";
-import { retrieveUserFromLocalStorage } from "../../utils/utils";
 
-let initialUser = retrieveUserFromLocalStorage();
+let initialUser = {};
 
-const authAdapter = createEntityAdapter();
+const authAdapter = createEntityAdapter({ selectId: (user) => user._id });
+const token = localStorage.getItem('eventese-token');
+if (token) {
+  const res = await http('/users/refresh', { method: 'GET' });
+  initialUser = res.user;
+}
 
 const initialState = authAdapter.getInitialState(
   {
@@ -12,7 +16,8 @@ const initialState = authAdapter.getInitialState(
     authError: '',
     status: 'idle',
     creationStatus: 'idle',
-    error: ''
+    error: '',
+    token
   }
 );
 
@@ -28,32 +33,31 @@ export const fetchUsersList = createAsyncThunk('auth/fetchUsers', async () => {
   }
 );
 
+// export const userRefresh = createAsyncThunk('auth/userRefresh', async () => {
+//   const response = await http('/users/refresh', { method: 'GET' });
+//   return response;
+// }, {
+//   condition: (arg, thunkApi) => {
+//     const fetchStatus = selectCurrentAuthStatus(thunkApi.getState());
+//     return !(fetchStatus !== 'idle');
+//   }
+// },
+// );
+
 export const registerNewUser = createAsyncThunk('auth/registerNewUser', async (newUser) => {
-  const response = await http('/users', { method: 'POST', body: newUser });
+  const response = await http('/users/register', { method: 'POST', body: newUser });
   return response;
 })
+
+export const userLoggedIn = createAsyncThunk('auth/login', async (loginData) => {
+  const response = await http('/users/login', { method: 'POST', body: loginData });
+  return response;
+});
 
 export const authSlice = createSlice({
   name: 'Auth',
   initialState,
   reducers: {
-    userLoggedIn: (state, action) => {
-      // Realizando login "local"
-      const userList = Object.values(state.entities);
-      const userMatched = userList.find((val) => val.email === action.payload.email && val.password === action.payload.password);
-
-      if (userMatched) {
-        state.user = userMatched;
-        state.authError = '';
-
-        localStorage.setItem('evente-se-auth', JSON.stringify(state.user) + '|' + new Date().toISOString());
-        return;
-      }
-
-      state.authError = 'Credenciais inválidas.';
-
-    },
-
     userLoggedOut: (state, action) => {
       state.user = {};
       localStorage.removeItem('evente-se-auth');
@@ -78,15 +82,31 @@ export const authSlice = createSlice({
     }).addCase(registerNewUser.rejected, (state, action) => {
       state.status = 'failed';
       state.error = 'Erro ao registrar-se.';
-    });
-    ;
+    }).addCase(userLoggedIn.pending, (state, action) => {
+      state.status = 'pending';
+    }).addCase(userLoggedIn.fulfilled, (state, action) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      localStorage.setItem('eventese-token', state.token);
+      state.status = 'completed';
+    }).addCase(userLoggedIn.rejected, (state, action) => {
+      state.status = 'failed';
+      state.error = 'Erro ao logar usuário.'
+    })
+    // .addCase(userRefresh.pending, (state, action) => {
+    //   state.status = 'pending';
+    // }).addCase(userRefresh.fulfilled, (state, action) => {
+    //   state.user = action.payload.user;
+    //   state.status = 'completed';
+    // });
+
   }
 
 });
 
 export default authSlice.reducer;
 
-export const { userLoggedIn, userLoggedOut } = authSlice.actions;
+export const { userLoggedOut } = authSlice.actions;
 
 export const { selectAll: selectAllUsers, selectById: selectUserById } = authAdapter.getSelectors((state) => state.auth);
 
@@ -100,8 +120,10 @@ export const selectUsersStatus = (state) => state.user.status;
 
 export const selectAuthError = (state) => state.auth.authError;
 
-const selectId = (state, id) => id;
+export const selectAuthToken = (state) => state.auth.token;
+
+const selectId = (state, _id) => _id;
 
 export const selectAvailableUsersForEvent = createSelector([selectAllUsers, selectId], (users, ownerId) => {
-  return users.filter(val => val.id !== ownerId);
+  return users.filter(val => val._id !== ownerId);
 });

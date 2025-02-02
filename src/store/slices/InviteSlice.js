@@ -1,7 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit";
 import { http } from "../../http/client";
 
-const inviteAdapter = createEntityAdapter();
+const inviteAdapter = createEntityAdapter({ selectId: (invite) => invite._id });
 
 const initialState = inviteAdapter.getInitialState(
     {

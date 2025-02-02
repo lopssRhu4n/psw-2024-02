@@ -57,7 +57,7 @@ const EventPage = () => {
     const isUserParticipating = eventInvites.findIndex(invite => invite.user_id === currentUser?.id) !== -1;
 
     const handleDelete = () => {
-        dispatch(deleteEvent(event.id));
+        dispatch(deleteEvent(event._id));
         navigate('/');
     }
 
