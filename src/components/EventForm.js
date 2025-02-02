@@ -10,19 +10,26 @@ import ImageInput from "./Form/ImageInput";
 
 export const EventForm = (props) => {
     const dispatch = useDispatch();
-    const { handleSubmit, register, formState: { errors } } = useForm({
+    const { handleSubmit, register, setValue, formState: { errors } } = useForm({
         resolver: yupResolver(eventSchema),
         defaultValues: props.data
     })
 
-    const currentUser = useSelector(selectCurrentUser);
+    // const currentUser = useSelector(selectCurrentUser);
     const onSubmit = (data) => {
-        let requestData = { ...data };
+        // let requestData = { ...data };
+        const requestData = new FormData();
+        console.log('oi')
+
+        console.log(data.img)
+
+        Object.keys(data).forEach((key) => {
+            requestData.append(key, data[key]);
+        })
+
         if (props.data) {
             dispatch(updateEvent(requestData))
         } else {
-            requestData.used_capacity = 0
-            requestData.user_id = currentUser.id;
             dispatch(addNewEvent(requestData));
         }
         props.setShowForm(false);
@@ -45,7 +52,7 @@ export const EventForm = (props) => {
 
             <Row className="my-3 justify-content-between">
                 <Row className="col-12 col-md-6 pe-md-0">
-                    <ImageInput register={register} field={'img'} errors={errors} placeholder={'Imagem'} />
+                    <ImageInput register={register} field={'img'} errors={errors} setValue={setValue} placeholder={'Imagem'} />
                 </Row>
 
                 <Row className="col-12 col-md-6 ps-md-0 justify-content-center">

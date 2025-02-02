@@ -39,8 +39,8 @@ const FeedbackForm = (props) => {
             dispatch(updateFeedback(feedback));
             setIsEditing(false);
         } else {
-            feedback.eventId = props.eventId;
-            feedback.userId = user.id;
+            feedback.event = props.eventId;
+            feedback.user = user._id;
             dispatch(addNewFeedback(feedback));
         }
     }

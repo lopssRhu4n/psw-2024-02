@@ -88,6 +88,6 @@ export const selectFeedbackStatus = (state) => state.feedback.status;
 
 const selectId = (state, id) => id;
 
-export const selectUserFeedbacks = createSelector([selectAllFeedbacks, selectId], (feedbacks, userId) => feedbacks.filter((feedback) => feedback.userId === userId));
+export const selectUserFeedbacks = createSelector([selectAllFeedbacks, selectId], (feedbacks, userId) => feedbacks.filter((feedback) => feedback.user === userId));
 
-export const selectEventFeedbacks = createSelector([selectAllFeedbacks, selectId], (feedbacks, eventId) => feedbacks.filter((feedback) => feedback.eventId === eventId));
+export const selectEventFeedbacks = createSelector([selectAllFeedbacks, selectId], (feedbacks, eventId) => feedbacks.filter((feedback) => feedback.event === eventId));

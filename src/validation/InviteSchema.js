@@ -4,7 +4,7 @@ yup.setLocale(ptForm);
 
 export const inviteSchema = yup.object(
     {
-        user_id: yup.string().required(),
+        user: yup.string().required(),
         text: yup.string()
             .required()
             .min(8)

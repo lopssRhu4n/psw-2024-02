@@ -6,8 +6,13 @@ let initialUser = {};
 const authAdapter = createEntityAdapter({ selectId: (user) => user._id });
 const token = localStorage.getItem('eventese-token');
 if (token) {
-  const res = await http('/users/refresh', { method: 'GET' });
-  initialUser = res.user;
+  try {
+    const res = await http('/users/refresh', { method: 'GET' });
+    initialUser = res.user;
+
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 const initialState = authAdapter.getInitialState(

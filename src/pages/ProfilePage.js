@@ -30,9 +30,10 @@ const ProfilePage = (props) => {
     dispatch(fetchAllFeedbacks());
 
     const user = useSelector(selectCurrentUser);
-    const userInvites = useSelector((state) => selectUserInvites(state, user.id));
-    const userEvents = useSelector((state) => selectUserEvents(state, user.id));
-    const userFeedbacks = useSelector((state) => selectUserFeedbacks(state, user.id));
+    console.log(user)
+    const userInvites = useSelector((state) => selectUserInvites(state, user._id));
+    const userEvents = useSelector((state) => selectUserEvents(state, user._id));
+    const userFeedbacks = useSelector((state) => selectUserFeedbacks(state, user._id));
 
     const authStatus = useSelector(selectCurrentAuthStatus);
     const inviteStatus = useSelector(selectInvitesStatus);
@@ -73,7 +74,7 @@ const ProfilePage = (props) => {
         <div className="my-5">
             <h1>Seus convites</h1>
             <div className=" scroll-container-horizontal d-flex overflow-x-scroll py-5 justify-content-center">
-                {notOverInvites.length ? notOverInvites.map(val => <InviteCard val={val} key={'invite-card-' + val.id} />) : <h4>Não há convites para você.</h4>}
+                {notOverInvites.length ? notOverInvites.map(val => <InviteCard val={val} key={'invite-card-' + val._id} />) : <h4>Não há convites para você.</h4>}
             </div>
         </div>
 
@@ -82,7 +83,7 @@ const ProfilePage = (props) => {
             <div className="scroll-container-horizontal overflow-x-scroll py-5 d-flex justify-content-center">
                 {userOldInvitedEvents.length ? userOldInvitedEvents.map((event) => {
 
-                    const eventFeedback = userFeedbacks.find((feedback) => feedback.eventId === event.id);
+                    const eventFeedback = userFeedbacks.find((feedback) => feedback.event === event._id);
 
                     return <Card key={'card-event-feedback-' + event._id} style={{ width: '300px' }}>
                         <Card.Img
@@ -91,14 +92,14 @@ const ProfilePage = (props) => {
                                 currentTarget.src = PlaceholderImage;
                             }}
                             variant="top"
-                            src={event?.img ? event?.img : PlaceholderImage}
+                            src={event?.img ? 'http://localhost:3004' + event?.img : PlaceholderImage}
                             height={200}
                         />
                         <Card.ImgOverlay style={{ height: '200px' }}>
                             <Card.Text className="bg-dark text-white h5 p-2">{event.title}</Card.Text>
                         </Card.ImgOverlay>
                         <Card.Body>
-                            <FeedbackForm eventId={event.id} data={eventFeedback} />
+                            <FeedbackForm eventId={event._id} data={eventFeedback} />
                         </Card.Body>
 
                     </Card>

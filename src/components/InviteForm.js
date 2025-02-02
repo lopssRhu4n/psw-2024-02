@@ -27,8 +27,8 @@ const InviteForm = (props) => {
         if (Object.values(props.data).length) {
             dispatch(updateInvite(invite))
         } else {
-            invite.eventId = props.event_id;
-            invite.status = 'pending';
+            invite.event = props.event_id;
+            // invite.status = 'pending';
             dispatch(addNewInvite(invite));
         }
 
@@ -51,13 +51,13 @@ const InviteForm = (props) => {
             <div className="w-75 mx-auto">
                 {/* <Row className="my-3"> */}
                 <Form.Group className="mb-3">
-                    <Form.Select {...register('user_id')} bsPrefix="" className="" >
+                    <Form.Select {...register('user')} bsPrefix="" className="" >
                         <option value="">Selecione o convidado</option>
                         {userList.map((val) => {
-                            return (<option value={val.id} key={val.id + '-option'}>{val.name}</option>)
+                            return (<option value={val._id} key={val._id + '-option'}>{val.name}</option>)
                         })}
                     </Form.Select>
-                    <span className="error-span">{errors.user_id?.message}</span>
+                    <span className="error-span">{errors.user?.message}</span>
                 </Form.Group>
                 {/* </Row> */}
 
@@ -78,7 +78,9 @@ const InviteForm = (props) => {
                 </Form.Group>
 
                 <div className="w-100 d-flex justify-content-end">
-                    <Button type="submit" className="bg-primary border-white rounded-0">Criar</Button>
+                    <Button type="submit" className="bg-primary border-white rounded-0">
+                        {Object.values(props.data).length ? 'Atualizar' : 'Criar'}
+                    </Button>
                 </div>
 
                 {/* </Row> */}

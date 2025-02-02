@@ -12,6 +12,31 @@ export const http = async (endpoint, customConfig) => {
         config.headers['Authorization'] = 'Bearer ' + token;
     }
 
-    return await (await fetch(baseUrl + endpoint, config)).json()
+    const response = await fetch(baseUrl + endpoint, config)
+    if (response.ok) {
+        return await response.json();
+    }
+
+    return Promise.reject({ code: response.status, data: await response.json() })
+
 }
 
+export const httpFormData = async (endpoint, customConfig, data) => {
+    const token = localStorage.getItem('eventese-token');
+    const config = { ...customConfig, headers: { 'Authorization': 'Bearer ' + token } };
+    // config.headers['Authorization'] = 'Bearer ' + token;
+
+    const response = await fetch(baseUrl + endpoint, {
+        method: "POST",
+        body: data,
+        ...config
+    });
+
+    if (response.ok) {
+        return await response.json();
+    }
+
+    return Promise.reject({ code: response.status, data: await response.json() });
+
+
+}

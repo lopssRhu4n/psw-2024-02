@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../styles/Bar.css";
 import { Button, Image, Nav, Navbar } from "react-bootstrap"
 import { Outlet, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectAuthToken, selectCurrentUser, userLoggedOut, userRefresh } from "../store/slices/AuthSlice";
+import { selectCurrentUser, userLoggedOut, } from "../store/slices/AuthSlice";
 import defaultProfilePlaceholder from "../assets/defaultProfilePlaceholder.jpg";
 import { selectIsLoading } from "../store/slices/GlobalSlice";
 // import { Container } from "react-bootstrap";

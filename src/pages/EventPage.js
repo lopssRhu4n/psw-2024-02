@@ -53,8 +53,9 @@ const EventPage = () => {
         return (eventFeedbacks.map(val => val.rating).reduce((acc, cur) => acc += cur) / eventFeedbacks.length).toFixed(2);
     }
 
-    const isUserEvent = currentUser?.id === event?.user_id;
-    const isUserParticipating = eventInvites.findIndex(invite => invite.user_id === currentUser?.id) !== -1;
+    const isUserEvent = currentUser?._id === event?.user;
+    const isUserParticipating = eventInvites.findIndex(invite => invite.user === currentUser?._id) !== -1;
+    console.log(eventInvites)
 
     const handleDelete = () => {
         dispatch(deleteEvent(event._id));
@@ -68,10 +69,10 @@ const EventPage = () => {
     const handleAskToParticipate = () => {
         if (isAuthenticated) {
             const invite = {
-                eventId: id,
-                user_id: currentUser.id,
+                event: id,
+                user: currentUser._id,
                 text: '',
-                status: 'confirmed'
+                // status: 'confirmed'
             }
             dispatch(addNewInvite(invite));
             return;
@@ -105,7 +106,7 @@ const EventPage = () => {
 
     return <Container fluid="md" >
         {showFormUpdate && <EventForm setShowForm={setShowFormUpdate} showForm={showFormUpdate} data={event} />}
-        {showInviteForm && <InviteForm setShowForm={setShowInviteForm} event_id={event.id} data={invite} eventOwner={event.user_id} />}
+        {showInviteForm && <InviteForm setShowForm={setShowInviteForm} event_id={event._id} data={invite} eventOwner={event.user_id} />}
         <Card className="mb-3" style={{ minHeight: '75vh' }}>
             <Card.Img
                 onError={({ currentTarget }) => {
@@ -113,7 +114,7 @@ const EventPage = () => {
                     currentTarget.src = PlaceholderImage;
                 }}
                 variant="top"
-                src={event?.img ? event?.img : PlaceholderImage}
+                src={event?.img ? 'http://localhost:3004' + event?.img : PlaceholderImage}
                 height={300}
             />
             <Card.ImgOverlay className="text-dark flex" style={{ maxHeight: '350px' }}>

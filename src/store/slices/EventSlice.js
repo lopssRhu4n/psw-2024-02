@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, createEntityAdapter, createSelector } from "@reduxjs/toolkit";
-import { http } from "../../http/client";
+import { http, httpFormData } from "../../http/client";
 import { calculateIfEventIsOver } from "../../utils/utils";
 import { selectAllFeedbacks } from "./FeedbackSlice";
 
@@ -29,7 +29,9 @@ export const fetchEventList = createAsyncThunk('event/fetchEventList', async () 
     });
 
 export const addNewEvent = createAsyncThunk('event/addNewEvent', async (newEvent) => {
-    const response = await http('/events', { method: 'POST', body: newEvent });
+    // const response = await http('/events', { method: 'POST', body: newEvent });
+    const response = await httpFormData('/events', {}, newEvent);
+    console.log(response)
     return response;
 });
 
@@ -74,7 +76,7 @@ export const eventSlice = createSlice({
             }).addCase(deleteEvent.rejected, (state, action) => {
                 state.status = 'failed';
             }).addCase(deleteEvent.fulfilled, (state, action) => {
-                eventsAdapter.removeOne(state, action.payload.id);
+                eventsAdapter.removeOne(state, action.payload._id);
                 state.status = 'idle'
             });
 
@@ -93,7 +95,7 @@ const selectId = (state, id) => id;
 
 const selectInvitedEventsIds = (state, invitedEventsIds) => invitedEventsIds;
 
-export const selectUserEvents = createSelector([selectAllEvents, selectId], (events, user_id) => events.filter((val) => val.user_id === user_id));
+export const selectUserEvents = createSelector([selectAllEvents, selectId], (events, user_id) => events.filter((val) => val.user === user_id));
 
 export const selectUserOldInvitedEvents = createSelector([selectAllEvents, selectInvitedEventsIds], (events, invitedEventsIds) => {
     const invitedEvents = events.filter((val) => invitedEventsIds.includes(val.id))

@@ -25,7 +25,7 @@ export const EventCard = (props) => {
                         currentTarget.onerror = null; // prevents looping
                         currentTarget.src = PlaceholderImage;
                     }}
-                    src={props.val.img ?? PlaceholderImage}
+                    src={props.val.img ? 'http://localhost:3004' + props.val.img : PlaceholderImage}
                 />
             </Card.Header>
             <Card.Body>

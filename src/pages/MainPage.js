@@ -74,7 +74,7 @@ const MainPage = () => {
             <h2 className="d-flex align-items-center">Melhor Avaliados <i className="bi bi-star-fill ms-2" style={{ color: 'yellow' }}></i></h2>
             <div className="scroll-container-horizontal py-4 overflow-x-scroll d-flex" >
                 {bestRated.map((val) =>
-                    <div className="mx-5 card-container-horizontal" style={{ minWidth: '350px' }} key={'best-rated-card-' + val.id}>
+                    <div className="mx-5 card-container-horizontal" style={{ minWidth: '350px' }} key={'best-rated-card-' + val._id}>
                         <EventCard val={val} />
                     </div>
 

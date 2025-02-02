@@ -23,7 +23,7 @@ export const deleteInvite = createAsyncThunk('invite/deleteInvite', async (id) =
 })
 
 export const updateInvite = createAsyncThunk('invite/updateInvite', async (invite) => {
-    const response = await http('/invites/' + invite.id, { method: 'PUT', body: invite });
+    const response = await http('/invites/' + invite._id, { method: 'PUT', body: invite });
     return response;
 });
 
@@ -98,11 +98,11 @@ export const selectInvitesError = (state) => state.invite.error;
 const selectId = (state, id) => id;
 
 export const selectUserInvites = createSelector([selectAllInvites, selectId], (invites, user_id) => {
-    return invites.filter((val) => val.user_id === user_id);
+    return invites.filter((val) => val.user === user_id);
 })
 
 export const selectEventInvites = createSelector([selectAllInvites, selectId], (invites, event_id) => {
-    return invites.filter((val) => val.eventId === event_id);
+    return invites.filter((val) => val.event === event_id);
 });
 
 // (state, event_id) => {
