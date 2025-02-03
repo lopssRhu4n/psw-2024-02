@@ -39,14 +39,18 @@ const FeedbackForm = (props) => {
             dispatch(updateFeedback(feedback));
             setIsEditing(false);
         } else {
+            const feedbackInvite = props.userInvites.find((val) => val.user === user._id && val.event === props.eventId);
+            console.log(feedbackInvite._id)
             feedback.event = props.eventId;
+            feedback.invite = feedbackInvite._id;
             feedback.user = user._id;
+            console.log(feedback)
             dispatch(addNewFeedback(feedback));
         }
     }
 
     const handleDelete = () => {
-        dispatch(deleteFeedback(props.data.id));
+        dispatch(deleteFeedback(props.data._id));
     };
 
 
