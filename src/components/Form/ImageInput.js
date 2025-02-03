@@ -3,9 +3,11 @@ import placeHolderImg from "../../assets/placeholder.jpeg";
 import { useState } from "react";
 
 
-const ImageInput = ({ field, register, setValue, placeholder, errors, className = '' }) => {
+const ImageInput = ({ field, watch, register, setValue, placeholder, errors, className = '' }) => {
     const [imagePreview, setImagePreview] = useState(null);
-    // const imageFile = watch(field)
+    const imageFile = watch(field)
+    const inputSrc = imagePreview ? imagePreview : imageFile ? 'http://localhost:3004' + imageFile : placeHolderImg;
+    // console.log(imageFile)
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         // const uniqueFileName = `${Date.now()}-${Math.floor(Math.random() * 1000)}-eventimg`;
@@ -28,7 +30,7 @@ const ImageInput = ({ field, register, setValue, placeholder, errors, className 
     return (
         <Form.Group as={Col} className="pe-0" controlId="form-event-main_image">
             <Form.Label className="w-100 mb-4">
-                <Image height={250} className="w-100" rounded src={imagePreview ? imagePreview : placeHolderImg} />
+                <Image height={250} className="w-100" rounded src={inputSrc} />
             </Form.Label>
             <Form.Control
                 bsPrefix="my-form-control"
