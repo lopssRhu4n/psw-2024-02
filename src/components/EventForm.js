@@ -1,27 +1,25 @@
 import { Form, Row, Button } from "react-bootstrap";
-import { useDispatch, useSelector, } from "react-redux";
+import { useDispatch, } from "react-redux";
 import { addNewEvent, updateEvent } from "../store/slices/EventSlice";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { eventSchema } from "../validation/EventSchema";
-import { selectCurrentUser } from "../store/slices/AuthSlice";
 import DefaultInput from "./Form/DefaultInput";
 import ImageInput from "./Form/ImageInput";
 
 export const EventForm = (props) => {
     const dispatch = useDispatch();
-    const { handleSubmit, register, setValue, formState: { errors } } = useForm({
+    const { handleSubmit, watch, register, setValue, formState: { errors } } = useForm({
         resolver: yupResolver(eventSchema),
         defaultValues: props.data
     })
 
-    // const currentUser = useSelector(selectCurrentUser);
+    if (props.data) {
+        setValue('date', new Date(props.data.date));
+    }
     const onSubmit = (data) => {
         // let requestData = { ...data };
         const requestData = new FormData();
-        console.log('oi')
-
-        console.log(data.img)
 
         Object.keys(data).forEach((key) => {
             requestData.append(key, data[key]);
@@ -39,7 +37,7 @@ export const EventForm = (props) => {
 
         <Form className="border rounded-1 position-fixed z-3  w-75 h-75 bg-body py-4 px-3 overflow-x-hidden  overflow-y-scroll" onSubmit={handleSubmit(onSubmit)}>
             <Row className="d-flex my-3 px-2 justify-content-between">
-                <div style={{ width: 'auto' }} className="h2">Criar Evento</div>
+                <div style={{ width: 'auto' }} className="h2"> {props.data ? 'Atualizar Evento' : 'Criar Evento'} </div>
                 <Button className="rounded-circle bg-body border-0" style={{ width: 'auto' }} onClick={() => props.setShowForm(false)}>
                     <i className="bi bi-x-lg" width="32" height="32"></i>
                 </Button>
@@ -52,7 +50,7 @@ export const EventForm = (props) => {
 
             <Row className="my-3 justify-content-between">
                 <Row className="col-12 col-md-6 pe-md-0">
-                    <ImageInput register={register} field={'img'} errors={errors} setValue={setValue} placeholder={'Imagem'} />
+                    <ImageInput register={register} watch={watch} field={'img'} errors={errors} setValue={setValue} placeholder={'Imagem'} />
                 </Row>
 
                 <Row className="col-12 col-md-6 ps-md-0 justify-content-center">
