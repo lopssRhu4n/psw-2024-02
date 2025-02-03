@@ -30,7 +30,6 @@ const ProfilePage = (props) => {
     dispatch(fetchAllFeedbacks());
 
     const user = useSelector(selectCurrentUser);
-    console.log(user)
     const userInvites = useSelector((state) => selectUserInvites(state, user._id));
     const userEvents = useSelector((state) => selectUserEvents(state, user._id));
     const userFeedbacks = useSelector((state) => selectUserFeedbacks(state, user._id));
@@ -99,7 +98,7 @@ const ProfilePage = (props) => {
                             <Card.Text className="bg-dark text-white h5 p-2">{event.title}</Card.Text>
                         </Card.ImgOverlay>
                         <Card.Body>
-                            <FeedbackForm eventId={event._id} data={eventFeedback} />
+                            <FeedbackForm eventId={event._id} data={eventFeedback} userInvites={userInvites} />
                         </Card.Body>
 
                     </Card>

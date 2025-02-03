@@ -16,7 +16,6 @@ const MainPage = () => {
     const [nameFilter, setNameFilter] = useState('');
 
     const eventList = events.filter((event) => event.title.toLowerCase().includes(nameFilter.toLowerCase()));
-    // console.log(eventList)
     const dispatch = useDispatch();
     const eventListFetchingStatus = useSelector(selectEventsStatus);
     const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -62,10 +61,7 @@ const MainPage = () => {
                     {showCreationForm}
                 </Button>
             </OverlayTrigger>
-
-
         }
-
     }
 
     return (<div fluid className="mx-auto  main-container  mb-5  gx-4 gy-5 row justify-content-center" style={{ width: '90%' }} >
@@ -74,7 +70,7 @@ const MainPage = () => {
             <h2 className="d-flex align-items-center">Melhor Avaliados <i className="bi bi-star-fill ms-2" style={{ color: 'yellow' }}></i></h2>
             <div className="scroll-container-horizontal py-4 overflow-x-scroll d-flex" >
                 {bestRated.map((val) =>
-                    <div className="mx-5 card-container-horizontal" style={{ minWidth: '350px' }} key={'best-rated-card-' + val._id}>
+                    <div className="mx-5 card-container-horizontal" style={{ width: '350px' }} key={'best-rated-card-' + val._id}>
                         <EventCard val={val} />
                     </div>
 

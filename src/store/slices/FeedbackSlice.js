@@ -19,7 +19,7 @@ export const fetchAllFeedbacks = createAsyncThunk('feedback/fetchAllFeedbacks', 
 });
 
 export const updateFeedback = createAsyncThunk('feedback/updateFeedback', async (feedback) => {
-    const response = await http('/feedbacks/' + feedback.id, { method: 'PUT', body: feedback });
+    const response = await http('/feedbacks/' + feedback._id, { method: 'PUT', body: feedback });
     return response;
 })
 
@@ -69,7 +69,7 @@ export const feedbackSlice = createSlice({
         }).addCase(deleteFeedback.pending, (state, action) => {
             state.status = 'pending';
         }).addCase(deleteFeedback.fulfilled, (state, action) => {
-            feedbackAdapter.removeOne(state, action.payload.id);
+            feedbackAdapter.removeOne(state, action.payload._id);
             state.status = 'idle';
             state.error = '';
         }).addCase(deleteFeedback.rejected, (state, action) => {

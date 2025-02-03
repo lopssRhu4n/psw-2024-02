@@ -31,12 +31,11 @@ export const fetchEventList = createAsyncThunk('event/fetchEventList', async () 
 export const addNewEvent = createAsyncThunk('event/addNewEvent', async (newEvent) => {
     // const response = await http('/events', { method: 'POST', body: newEvent });
     const response = await httpFormData('/events', {}, newEvent);
-    console.log(response)
     return response;
 });
 
 export const updateEvent = createAsyncThunk('event/updateEvent', async (eventData) => {
-    const response = await http('/events/' + eventData.id, { method: 'PUT', body: eventData });
+    const response = await httpFormData('/events/' + eventData.get('_id'), { method: 'PUT' }, eventData);
     return response;
 })
 

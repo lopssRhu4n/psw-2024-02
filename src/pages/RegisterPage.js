@@ -19,7 +19,13 @@ const RegisterPage = () => {
 
     const onSubmit = (data) => {
         // console.log(user)
-        dispatch(registerNewUser(data));
+        let requestData = new FormData();
+        Object.keys(data).forEach((key) => {
+            requestData.append(key, data[key]);
+        })
+
+
+        dispatch(registerNewUser(requestData));
         navigate('/');
     }
 

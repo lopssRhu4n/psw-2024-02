@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, createEntityAdapter, createSelector } from "@reduxjs/toolkit";
-import { http } from "../../http/client";
+import { http, httpFormData } from "../../http/client";
 
 let initialUser = {};
 
@@ -50,7 +50,7 @@ export const fetchUsersList = createAsyncThunk('auth/fetchUsers', async () => {
 // );
 
 export const registerNewUser = createAsyncThunk('auth/registerNewUser', async (newUser) => {
-  const response = await http('/users/register', { method: 'POST', body: newUser });
+  const response = await httpFormData('/users/register', { method: 'POST' }, newUser);
   return response;
 })
 
@@ -65,7 +65,7 @@ export const authSlice = createSlice({
   reducers: {
     userLoggedOut: (state, action) => {
       state.user = {};
-      localStorage.removeItem('evente-se-auth');
+      localStorage.removeItem('eventese-token');
     }
   },
   extraReducers: (builder) => {
@@ -80,9 +80,10 @@ export const authSlice = createSlice({
     }).addCase(registerNewUser.pending, (state) => {
       state.creationStatus = 'pending';
     }).addCase(registerNewUser.fulfilled, (state, action) => {
-      authAdapter.addOne(state, action.payload);
-      state.user = action.payload;
-      localStorage.setItem('evente-se-auth', JSON.stringify(state.user) + '|' + new Date().toISOString());
+      authAdapter.addOne(state, action.payload.user);
+      state.user = action.payload.user;
+      state.token = action.payload.token
+      localStorage.setItem('eventese-token', state.token);
       state.creationStatus = 'completed';
     }).addCase(registerNewUser.rejected, (state, action) => {
       state.status = 'failed';
