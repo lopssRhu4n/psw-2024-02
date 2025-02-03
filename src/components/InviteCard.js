@@ -11,7 +11,6 @@ const InviteCard = (props) => {
     dispatch(fetchUsersList());
 
     const inviteEvent = useSelector((state) => selectEventById(state, props.val?.event));
-    console.log(inviteEvent + 'evento do convite')
     const senderUser = useSelector((state) => selectUserById(state, inviteEvent ? inviteEvent.user : ''));
 
     const handleButtonClick = (status) => {
