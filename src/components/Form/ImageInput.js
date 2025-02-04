@@ -35,9 +35,10 @@ const ImageInput = ({ field, watch, register, setValue, placeholder, errors, cla
             <Form.Control
                 bsPrefix="my-form-control"
                 type="file"
-                className={(errors[field]?.message === undefined ? '' : 'error-input')}
+                className={(errors[field]?.message === undefined ? '' : 'error-input') + ' object-cover-fit'}
                 placeholder={placeholder}
                 name={field}
+                accept=".png,.jpg,.jpeg"
                 onChange={handleImageChange}
             />
             <span className="error-span">{errors[field]?.message}</span>

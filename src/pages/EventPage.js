@@ -55,7 +55,6 @@ const EventPage = () => {
 
     const isUserEvent = currentUser?._id === event?.user;
     const isUserParticipating = eventInvites.findIndex(invite => invite.user === currentUser?._id) !== -1;
-    console.log(eventInvites)
 
     const handleDelete = () => {
         dispatch(deleteEvent(event._id));
@@ -123,7 +122,7 @@ const EventPage = () => {
                     className="icon-overlay bg-primary cursor-pointer  border border-white p-2 rounded-circle position-absolute z-2" rounded fluid
                 />
 
-                {isUserEvent ? <Button bsPrefix="delete-overlay" className="position-absolute  z-2" onClick={handleDelete}><i className="bi bi-trash3"> </i></Button> : ''}
+                {(isUserEvent && !isEventOver) && <Button bsPrefix="delete-overlay" className="position-absolute  z-2" onClick={handleDelete}><i className="bi bi-trash3"> </i></Button>}
 
                 <Card.Title className="bg-dark text-white">{event?.title}</Card.Title>
                 <Card.Text className="bg-dark text-white">
@@ -147,7 +146,7 @@ const EventPage = () => {
 
                             <Dropdown.Menu>
                                 {eventInvites.length ? eventInvites.map((val) => {
-                                    const user = userList.find((user) => user.id === val.user_id);
+                                    const user = userList.find((user) => user._id === val.user);
                                     if (user) {
                                         return <Dropdown.Item key={'dropdown-item' + val.id} bsPrefix="my-dropdown-item" disabled={!isUserEvent} className="d-flex align-items-center my-dropdown-item px-2">
 
@@ -160,7 +159,7 @@ const EventPage = () => {
                                                         setShowInviteForm(true)
 
                                                     }}><i className="bi bi-pencil" ></i></Button>
-                                                    <Button className="bg-transparent border-0"><i className="bi bi-trash" onClick={() => handleDeleteInvite(val.id)}></i></Button>
+                                                    <Button className="bg-transparent border-0"><i className="bi bi-trash" onClick={() => handleDeleteInvite(val._id)}></i></Button>
                                                 </>}
                                         </Dropdown.Item >
                                     }

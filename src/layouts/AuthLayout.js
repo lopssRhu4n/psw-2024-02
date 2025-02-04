@@ -8,7 +8,7 @@ const AuthLayout = () => {
             <h1>Evente-se</h1>
 
 
-            <div className="login-main h-75 w-50  rounded rounded rounded-3 border mt-4" style={{ minWidth: '320px' }}>
+            <div className="login-main  w-50  rounded rounded rounded-3 border mt-4" style={{ minWidth: '320px', minHeight: '75%' }}>
                 <Navbar className="d-flex flex-column pt-0">
                     <Nav variant="tabs" as={Row} className="w-100  border-bottom pa-0">
                         <Nav.Link as={NavLink} to="/auth/login" className="col-6 text-center rounded-end-0 border-top-0 border-start-0">Entrar</Nav.Link>

@@ -71,7 +71,7 @@ export const inviteSlice = createSlice({
             state.status = 'pending';
         }).addCase(deleteInvite.fulfilled, (state, action) => {
             // state.eventInvites = state.eventInvites.filter((val) => val.id !== action.payload.id);
-            inviteAdapter.removeOne(state, action.payload);
+            inviteAdapter.removeOne(state, action.payload._id);
             state.status = 'idle';
         }).addCase(deleteInvite.rejected, (state, action) => {
             state.status = 'failed'

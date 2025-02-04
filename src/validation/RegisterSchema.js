@@ -27,6 +27,7 @@ export const registerSchema = yup.object(
             .matches(cpfRegex, { message: 'O CPF deve estar no formato 111.111.111-11' }),
         email: yup.string()
             .required()
-            .email()
+            .email(),
+        img: yup.mixed().required('É necessário escolher a imagem de perfil.')
     }
 ).required();

@@ -5,13 +5,15 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { inviteSchema } from "../validation/InviteSchema";
-import { addNewInvite, updateInvite } from "../store/slices/InviteSlice";
+import { addNewInvite, fetchAllInvites, selectAllInvites, selectInvitesStatus, updateInvite } from "../store/slices/InviteSlice";
 
 const InviteForm = (props) => {
 
+    const invites = useSelector((state) => selectAllInvites(state));
     const userList = useSelector((state) => selectAvailableUsersForEvent(state, props.eventOwner));
     const dispatch = useDispatch();
     const userListFetchingStatus = useSelector(selectCurrentAuthStatus);
+    const invitesStatus = useSelector(selectInvitesStatus);
 
     const { handleSubmit, register, formState: { errors } } = useForm({
         resolver: yupResolver(inviteSchema),
@@ -21,7 +23,8 @@ const InviteForm = (props) => {
 
     useEffect(() => {
         dispatch(fetchUsersList());
-    }, [userListFetchingStatus, dispatch]);
+        dispatch(fetchAllInvites())
+    }, [userListFetchingStatus, invitesStatus, dispatch]);
 
     const onSubmit = (invite) => {
         if (Object.values(props.data).length) {
@@ -41,7 +44,7 @@ const InviteForm = (props) => {
             onSubmit={handleSubmit(onSubmit)}
         >
             <Row className="d-flex my-3 px-2 justify-content-between">
-                <div style={{ width: 'auto' }} className="h2">{Object.values(props.data).length ? 'Editar Convite' : 'Convidar para Evento'}</div>
+                <div style={{ width: 'auto' }} className="h2">{Object.values(props.data).length ? 'Editar Convite' : 'Convidar para Evento' ? 'Editar Convite' : 'Convidar para Evento'}</div>
                 <Button className="rounded-circle bg-body border-0" style={{ width: 'auto' }} onClick={() => props.setShowForm(false)}>
                     <i className="bi bi-x-lg" width="32" height="32"></i>
                     {props.showForm}
@@ -51,11 +54,12 @@ const InviteForm = (props) => {
             <div className="w-75 mx-auto">
                 {/* <Row className="my-3"> */}
                 <Form.Group className="mb-3">
-                    <Form.Select {...register('user')} bsPrefix="" className="" >
-                        <option value="">Selecione o convidado</option>
-                        {userList.map((val) => {
-                            return (<option value={val._id} key={val._id + '-option'}>{val.name}</option>)
-                        })}
+                    <Form.Select disabled={Object.values(props.data).length} {...register('user')} bsPrefix="" className="" >
+                        {Object.values(props.data).length ? <option>{userList.find(user => user._id === props.data.user).name}</option> : <option value="">Selecione o convidado</option>}
+                        {userList.filter(val => invites.findIndex(invite => invite.user === val._id && invite.event === props.event_id) === -1)
+                            .map((val) => {
+                                return (<option value={val._id} key={val._id + '-option'}>{val.name}</option>)
+                            })}
                     </Form.Select>
                     <span className="error-span">{errors.user?.message}</span>
                 </Form.Group>

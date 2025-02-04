@@ -35,8 +35,13 @@ const InviteCard = (props) => {
         </Card.Header>
 
         <Card.Body>
+            <div className="text-center">
+                {
+                    props.val.text
+                }
+            </div>
             {props.val.status === 'pending' && <div>
-                <p className="text-caption">Confirmar presença:</p>
+                <p className="text-caption text-center">Confirmar presença:</p>
 
                 <div className="d-flex justify-content-around">
                     <Button className="bg-transparent rounded-5" onClick={() => handleButtonClick('confirmed')} style={{ borderColor: 'green', color: 'green' }}><i className="bi bi-check"></i></Button>

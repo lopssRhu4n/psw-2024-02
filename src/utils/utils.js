@@ -25,10 +25,10 @@ export const retrieveUserFromLocalStorage = () => {
 }
 
 export const calculateIfEventIsOver = (event) => {
-    if (event?.date && event?.end_time) {
-        const { date, end_time } = event;
+    if (event?.date) {
+        const { date } = event;
         // console.log(date.slice(0, 10), end_time)
-        const combinedString = `${date.slice(0, 10)}T${end_time}:00`;
+        const combinedString = `${date.slice(0, 10)}T00:00:00`;
         const dateFormated = new Date(combinedString);
         const nowDate = new Date();
 

@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser, userLoggedOut, } from "../store/slices/AuthSlice";
 import defaultProfilePlaceholder from "../assets/defaultProfilePlaceholder.jpg";
 import { selectIsLoading } from "../store/slices/GlobalSlice";
-// import { Container } from "react-bootstrap";
 
 const MainLayout = (props) => {
 
@@ -54,7 +53,7 @@ const MainLayout = (props) => {
                             currentTarget.src = defaultProfilePlaceholder;
                         }}
 
-                        src={user.profile_image ?? defaultProfilePlaceholder} style={{ width: '50px' }} className="bg-primary p-2 rounded-circle" rounded fluid />
+                        src={user?.img ? 'http://localhost:3004' + user?.img : defaultProfilePlaceholder} className="bg-primary border border-light-subtle rounded-circle object-cover-fit" rounded height={50} width={50} />
                 </Nav.Link>
                 {
                     userExists ?
