@@ -38,6 +38,11 @@ const initialState = feedbackAdapter.getInitialState({
 export const feedbackSlice = createSlice({
     name: 'Feedback',
     initialState,
+    reducers: {
+        changeFeedbacksStatus: (state, action) => {
+            state.status = action.payload
+        },
+    },
     extraReducers: builder => {
         builder.addCase(addNewFeedback.pending, (state, action) => {
             state.status = 'pending';
@@ -81,6 +86,8 @@ export const feedbackSlice = createSlice({
 })
 
 export default feedbackSlice.reducer;
+
+export const { changeFeedbacksStatus } = feedbackSlice.actions;
 
 export const { selectAll: selectAllFeedbacks } = feedbackAdapter.getSelectors((state) => state.feedback);
 

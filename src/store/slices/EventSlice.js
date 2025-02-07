@@ -47,7 +47,11 @@ export const deleteEvent = createAsyncThunk('event/deleteEvent', async (id) => {
 export const eventSlice = createSlice({
     name: 'Event',
     initialState,
-    reducers: {},
+    reducers: {
+        changeEventsStatus: (state, action) => {
+            state.status = action.payload;
+        }
+    },
     extraReducers:
         builder => {
             builder.addCase(fetchEventList.pending, (state, action) => {
@@ -83,6 +87,8 @@ export const eventSlice = createSlice({
 })
 
 export default eventSlice.reducer;
+
+export const { changeEventsStatus } = eventSlice.actions;
 
 export const { selectAll: selectAllEvents, selectById: selectEventById, selectIds: selectEventsIds } = eventsAdapter.getSelectors((state) => state.event);
 

@@ -66,6 +66,9 @@ export const authSlice = createSlice({
     userLoggedOut: (state, action) => {
       state.user = {};
       localStorage.removeItem('eventese-token');
+    },
+    changeAuthStatus: (state, action) => {
+      state.status = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -112,7 +115,7 @@ export const authSlice = createSlice({
 
 export default authSlice.reducer;
 
-export const { userLoggedOut } = authSlice.actions;
+export const { userLoggedOut, changeAuthStatus } = authSlice.actions;
 
 export const { selectAll: selectAllUsers, selectById: selectUserById } = authAdapter.getSelectors((state) => state.auth);
 

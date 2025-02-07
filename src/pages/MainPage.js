@@ -35,7 +35,9 @@ const MainPage = () => {
         }
     })
 
-    dispatch(fetchAllFeedbacks());
+    useEffect(() => {
+        dispatch(fetchAllFeedbacks());
+    }, [dispatch, feedbackStatus]);
 
 
     const [showCreationForm, setShowCreationForm] = useState(false);

@@ -2,30 +2,34 @@ import { Card, Row } from "react-bootstrap";
 import PlaceholderImage from "../assets/placeholder.jpeg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllInvites, selectEventInvites } from "../store/slices/InviteSlice";
+import { fetchAllInvites, selectEventInvites, selectInvitesStatus } from "../store/slices/InviteSlice";
+import { useEffect } from "react";
 
 export const EventCard = (props) => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
+    const invitesListStatus = useSelector(selectInvitesStatus);
 
-    dispatch(fetchAllInvites());
+    useEffect(() => {
+        dispatch(fetchAllInvites());
+    }, [dispatch, invitesListStatus]);
 
     const handleClick = () => {
         navigate("/event/" + props.val._id);
     }
 
-    const userQuantity = useSelector((state) => selectEventInvites(state, props.val.id)).length;
+    const userQuantity = useSelector((state) => selectEventInvites(state, props.val._id)).length;
 
     return (
         <Card className="main-card h-100" onClick={handleClick}>
             <Card.Header className="p-0">
                 <Card.Img
-
                     onError={({ currentTarget }) => {
                         currentTarget.onerror = null; // prevents looping
                         currentTarget.src = PlaceholderImage;
                     }}
                     src={props.val.img ? 'http://localhost:3004' + props.val.img : PlaceholderImage}
+                    style={{ width: 'full', height: '300px' }}
                 />
             </Card.Header>
             <Card.Body>

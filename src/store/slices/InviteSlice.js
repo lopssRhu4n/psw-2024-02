@@ -51,6 +51,11 @@ export const fetchUserInvites = 'Todo';
 export const inviteSlice = createSlice({
     name: 'Invite',
     initialState,
+    reducers: {
+        changeInvitesStatus: (state, action) => {
+            state.status = action.payload;
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(addNewInvite.pending, (state, action) => {
             state.status = 'pending';
@@ -88,6 +93,8 @@ export const inviteSlice = createSlice({
 })
 
 export default inviteSlice.reducer;
+
+export const { changeInvitesStatus } = inviteSlice.actions;
 
 export const { selectAll: selectAllInvites } = inviteAdapter.getSelectors((state) => state.invite)
 

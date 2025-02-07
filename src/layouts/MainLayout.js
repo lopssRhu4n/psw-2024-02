@@ -6,8 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser, userLoggedOut, } from "../store/slices/AuthSlice";
 import defaultProfilePlaceholder from "../assets/defaultProfilePlaceholder.jpg";
 import { selectIsLoading } from "../store/slices/GlobalSlice";
+import useSSE from "../hooks/useSSE";
+import { baseUrl } from "../http/client";
 
 const MainLayout = (props) => {
+
+
+    useSSE(baseUrl + '/subscribe');
+    // console.log(updates)
 
     const isLoading = useSelector(selectIsLoading);
     const dispatch = useDispatch();
