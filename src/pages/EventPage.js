@@ -1,4 +1,4 @@
-import { Button, Card, Container, Dropdown, Image } from "react-bootstrap";
+import { Button, Card, Container, Dropdown, Image, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import PlaceholderImage from "../assets/placeholder.jpeg";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +6,7 @@ import { deleteEvent, fetchEventList, selectEventById, selectEventsStatus } from
 import '../styles/EventPage.css'
 import { useEffect, useState } from "react";
 import { EventForm } from "../components/EventForm";
-import { fetchUsersList, selectAllUsers, selectCurrentAuthStatus, selectCurrentUser, selectIsAuthenticated } from "../store/slices/AuthSlice";
+import { fetchUsersList, selectAllUsers, selectCurrentAuthStatus, selectCurrentUser, selectIsAuthenticated, selectUserById } from "../store/slices/AuthSlice";
 import InviteForm from "../components/InviteForm";
 import { addNewInvite, deleteInvite, fetchAllInvites, selectEventInvites, selectInvitesStatus } from "../store/slices/InviteSlice";
 import { calculateIfEventIsOver } from "../utils/utils";
@@ -47,6 +47,7 @@ const EventPage = () => {
 
     const currentUser = useSelector(selectCurrentUser);
     const event = useSelector((state) => selectEventById(state, id));
+    const eventOwner = useSelector(state => selectUserById(state, event?.user));
     const eventFeedbacks = useSelector(state => selectEventFeedbacks(state, id));
 
     const calculateAverageRating = () => {
@@ -80,6 +81,17 @@ const EventPage = () => {
     }
 
     const isEventOver = calculateIfEventIsOver(event);
+    const renderExcludeTooltip = (props) => (
+        <Tooltip id="exclude-tooltip" {...props}>
+            Excluir evento
+        </Tooltip>
+    )
+
+    const renderTooltip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+            Criador: {eventOwner?.name}
+        </Tooltip>
+    )
 
     const renderCardActions = () => {
         if (isEventOver) {
@@ -117,16 +129,42 @@ const EventPage = () => {
                 height={300}
             />
             <Card.ImgOverlay className="text-dark flex" style={{ maxHeight: '350px' }}>
-                <Image
-                    src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/025.png"
-                    className="icon-overlay bg-primary cursor-pointer  border border-white p-2 rounded-circle position-absolute z-2" rounded fluid
-                />
+                <OverlayTrigger
+                    placement="bottom"
+                    delay={{ show: 100, hide: 100 }}
+                    overlay={renderTooltip}
+                >
+                    <Image
+                        width={50}
+                        height={50}
+                        onError={({ currentTarget }) => {
+                            currentTarget.onerror = null; // prevents looping
+                            currentTarget.src = PlaceholderImage;
+                        }}
+                        src={eventOwner ? 'http://localhost:3004' + eventOwner.img : PlaceholderImage}
+                        className=" bg-primary cursor-pointer  border border-white  rounded-circle position-absolute z-2 icon-overlay" rounded fluid
+                    />
 
-                {(isUserEvent && !isEventOver) && <Button bsPrefix="delete-overlay" className="position-absolute  z-2" onClick={handleDelete}><i className="bi bi-trash3"> </i></Button>}
 
-                <Card.Title className="bg-dark text-white">{event?.title}</Card.Title>
-                <Card.Text className="bg-dark text-white">
-                    {event?.date.slice(0, 10)} | {event?.start_time} - {event?.end_time}
+                </OverlayTrigger>
+                {(isUserEvent && !isEventOver) &&
+
+                    <OverlayTrigger
+                        placement="bottom"
+                        delay={{ show: 100, hide: 100 }}
+                        overlay={renderExcludeTooltip}
+                    >
+                        <Button bsPrefix="delete-overlay" className="position-absolute  z-2" onClick={handleDelete}>
+                            <i className="bi bi-trash3"></i>
+                        </Button>
+                    </OverlayTrigger>
+                }
+
+                <Card.Title className="d-flex text-white"><div className="rounded p-2 w-auto" style={{ backgroundColor: 'rgba(75, 75, 75, 0.2)' }}>{event?.title}</div></Card.Title>
+                <Card.Text className="d-flex text-white p-1">
+                    <div className="w-auto rounded p-2" style={{ backgroundColor: 'rgba(75, 75, 75, 0.2)' }}>
+                        {event?.date.slice(0, 10)} | {event?.start_time} - {event?.end_time}
+                    </div>
                 </Card.Text>
             </Card.ImgOverlay>
             <Card.Body className="h-100 d-flex flex-column">
